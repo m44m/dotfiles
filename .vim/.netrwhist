@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/masa/Dropbox'
+let g:netrw_dirhist_2='/Users/masa/Dropbox/Your Flex Folder'
+let g:netrw_dirhist_3='/Users/masa/Dropbox/Your Flex Folder/Study'
+let g:netrw_dirhist_4='/Users/masa/Dropbox/Your Flex Folder/Study/XML'
+let g:netrw_dirhist_5='/Users/masa/Dropbox/Your Flex Folder/Study'
+let g:netrw_dirhist_6='/Users/masa/Dropbox/Your Flex Folder/Study/Ruby'
+let g:netrw_dirhist_7='/Users/masa'

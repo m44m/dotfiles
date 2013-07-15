@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='ftp://ftp9.gmoserver.jp/sakura-corporation-tokyo.co.jp/'
+let g:netrw_dirhist_2='ftp://ftp9.gmoserver.jp/sakura-corporation-tokyo.co.jp/wp/'
+let g:netrw_dirhist_3='ftp://ftp9.gmoserver.jp/sakura-corporation-tokyo.co.jp/wp/wp-admin/'
+let g:netrw_dirhist_4='ftp://ftp9.gmoserver.jp/'
