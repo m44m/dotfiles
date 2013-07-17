@@ -31,25 +31,25 @@ Interface		|vimfiler-interface|
   Variables		  |vimfiler-variables|
     Sources variables	    |vimfiler-sources-variables|
   Key mappings		  |vimfiler-key-mappings|
+  Options		  |vimfiler-options|
 Columns			|vimfiler-columns|
 Examples		|vimfiler-examples|
 Unite sources		|vimfiler-unite-sources|
 FAQ			|vimfiler-faq|
-Changelog		|vimfiler-changelog|
 
 ==============================================================================
 INTRODUCTION					*vimfiler-introduction*
 
-*vimfiler* is a powerful file explorer(filer) written by Vim script.
+*vimfiler* is a powerful file explorer (or filer) written in Vim script.
 
 ==============================================================================
 USAGE						*vimfiler-usage*
 
-	To run vimfiler, execute this command.
+	Execute the following command to start vimfiler.
 >
 	:VimFiler
 <
-	If you set |g:vimfiler_as_default_explorer| to 1, vimfiler behaves
+	If you've set |g:vimfiler_as_default_explorer| to 1, vimfiler behaves
 	as default explorer like |netrw|.
 >
 	:let g:vimfiler_as_default_explorer = 1
@@ -57,9 +57,9 @@ USAGE						*vimfiler-usage*
 vimfiler needs |unite|
 http://github.com/Shougo/unite.vim
 
-Please install unite.vim Ver.3.0(or later) before use vimfiler.
+Please install unite.vim Ver.3.0 or later before using vimfiler.
 
-Note: To use 4GB(>) files in vimfiler, vimfiler require |+python| interface.
+Note: To use 4GB+ files in vimfiler, vimfiler requires |+python| interface.
 
 ==============================================================================
 INTERFACE					*vimfiler-interface*
@@ -69,12 +69,18 @@ COMMANDS 					*vimfiler-commands*
 
 :VimFiler [{options}...] [[{source-name}:]{path}]
 						*:VimFiler*
-		Run vimfiler. This command reuses a buffer if a vimfiler
-		buffer already exists. If you omit {path}, vimfiler opens current
-		directory. [[{source-name}:]{path}] arg is same as |:Unite|.
-		But you omit source name, "file" source will be used.
-		If {path} is directory, browse in {path} directory files.
-		If {path} is file, edit {path} file.
+		Runs vimfiler. This command reuses a buffer if a vimfiler
+		buffer already exists. If you omit {path}, vimfiler opens
+		current directory. [[{source-name}:]{path}] arg is same as
+		|:Unite|.  But you omit source name, "file" source will be
+		used.  If {path} is directory, browse in {path} directory
+		files.  If {path} is file, edit {path} file.
+		{options} are options for a vimfiler buffer:
+		|vimfiler-options|
+
+		If another vimfiler buffer exists in current tab, switches to
+		the vimfiler buffer and changes its current directory to
+		{path}.
 
 		Examples:
 		"foo": the parameters of source file are
@@ -83,102 +89,9 @@ COMMANDS 					*vimfiler-commands*
 		                ["bar", "baz"].
 >
 		" File explorer like behavior.
-		:VimFiler -buffer-name=explorer -split -simple -winwidth=35 -toggle -no-quit
+		:VimFiler -buffer-name=explorer
+		\ -split -simple -winwidth=35 -toggle -no-quit
 		:VimFilerExplorer
-<
-						*vimfiler-options*
-		{options} are options for a vimfiler buffer.  You may give the
-		following parameters for a option; you must escape with \ when
-		it contains spaces.
-
-						*vimfiler-options-buffer-name*
-		-buffer-name={buffer-name}
-		Specifies a buffer name.
-		The default buffer name is 'default'.
-		Note: Buffer name must not contain spaces.
-
-						*vimfiler-options-no-quit*
-		-no-quit
-		Doesn't close the vimfiler buffer after firing an action.
-
-						*vimfiler-options-quit*
-		-quit
-		Close the vimfiler buffer after firing an action.
-
-						*vimfiler-options-winwidth*
-		-winwidth={window-width}
-		Specifies the width of a vimfiler buffer.
-
-						*vimfiler-options-winminwidth*
-		-winminwidth={window-width}
-		Specifies the minimum width of a vimfiler buffer.
-
-						*vimfiler-options-winheight*
-		-winheight={window-height}
-		Specifies the height of a vimfiler buffer.
-
-						*vimfiler-options-direction*
-		-direction={direction}
-		Defines split position rule. The default value is same to
-		|g:vimfiler_split_rule|.
-
-						*vimfiler-options-toggle*
-		-toggle
-		Close vimfiler buffer window if this vimfiler buffer name
-		window is exists.
-
-						*vimfiler-options-simple*
-		-simple
-		Enable vimfiler simple mode.
-
-						*vimfiler-options-split*
-		-split
-		Split vimfiler buffer.
-
-						*vimfiler-options-horizontal*
-		-horizontal
-		Split horizontally.
-
-						*vimfiler-options-double*
-		-double
-		Open vimfiler buffers in double mode.
-
-						*vimfiler-options-create*
-		-create
-		Create new vimfiler buffer.
-
-						*vimfiler-options-auto-cd*
-		-auto-cd
-		Enable auto cd behavior.
-		If omit it, use |g:vimfiler_enable_auto_cd|.
-		Note: This option works in file source.
-
-						*vimfiler-options-explorer*
-		-explorer
-		Enable the behavior like explorer.
-		Note: This option changes some default options.
-		For Example, hide parent directory, change some default
-		mappings ...
-
-						*vimfiler-options-reverse*
-		-reverse
-		Reverse open another vimfiler window.
-		If "-horizontal" option is enabled, will open another vimfiler
-		vertically.  If "-horizontal" option is disabled, will open
-		another vimfiler horizontally.
-
-						*vimfiler-options-project*
-		-project
-		Move to project directory.
-
-						*vimfiler-options-columns*
-		-columns={columns1:columns2:...}
-		Specify vimfiler columns. If omit it,
-		|g:vimfiler_default_columns| will be used.
-
-						*vimfiler-options-status*
-		-status
-		Display status line in vimfiler buffer.
 
 :VimFilerCreate [{options}...] [{path}]		*:VimFilerCreate*
 		Equivalent to |:VimFiler| except that it creates a new vimfiler
@@ -417,6 +330,18 @@ g:vimfiler_explorer_columns			 *g:vimfiler_explorer_columns*
 		
 		Default value is "type".
 
+g:vimfiler_ignore_pattern			 *g:vimfiler_ignore_pattern*
+		Specify the regexp pattern to ignore candidates of the source.
+		This applies on the filenames of candidates.  It's case
+		sensitive.
+		Note: If you use
+		|<Plug>(vimfiler_toggle_visible_ignore_files)|, the ignore
+		pattern is disabled.
+>
+		let g:vimfiler_ignore_pattern = '^\%(.git\|.DS_Store\)$'
+<
+		Default value is '^\.' (dot files pattern).
+
 SOURCES VARIABLES 				*vimfiler-sources-variables*
 
 g:unite_kind_file_delete_file_command
@@ -619,9 +544,10 @@ Normal mode key mappings.
 				*<Plug>(vimfiler_switch_to_history_directory)*
 		Switches to history directory by |unite| interface.
 
-<Plug>(vimfiler_toggle_visible_dot_files)
+<Plug>(vimfiler_toggle_visible_ignore_files)
+				*<Plug>(vimfiler_toggle_visible_ignore_files)*
 				*<Plug>(vimfiler_toggle_visible_dot_files)*
-		Toggles visible dot files.
+		Toggles visible ignore files. cf: |g:vimfiler_ignore_pattern|
 
 <Plug>(vimfiler_popup_shell)			*<Plug>(vimfiler_popup_shell)*
 		Executes |:VimShellPop|or |:shell|.
@@ -829,7 +755,7 @@ L			<Plug>(vimfiler_switch_to_drive)
 \			<Plug>(vimfiler_switch_to_root_directory)
 <C-j>			<Plug>(vimfiler_switch_to_history_directory)
 <BS>			<Plug>(vimfiler_switch_to_parent_directory)
-.			<Plug>(vimfiler_toggle_visible_dot_files)
+.			<Plug>(vimfiler_toggle_visible_ignore_files)
 H			<Plug>(vimfiler_popup_shell)
 e			<Plug>(vimfiler_edit_file)
 E			<Plug>(vimfiler_split_edit_file)
@@ -867,6 +793,108 @@ Visual mode mappings.
 {lhs}			{rhs}
 --------		-----------------------------
 <Space>			<Plug>(vimfiler_toggle_mark_selected_lines)
+
+------------------------------------------------------------------------------
+OPTIONS						*vimfiler-options*
+
+{options} are options for a vimfiler buffer.  You may give the following
+parameters for an option.  You need to escape spaces with "\".
+
+						*vimfiler-options-buffer-name*
+		-buffer-name={buffer-name}
+		Specifies a buffer name.
+		The default buffer name is 'default'.
+		Note: Buffer name must not contain spaces.
+
+						*vimfiler-options-no-quit*
+		-no-quit
+		Doesn't close the vimfiler buffer after firing an action.
+
+						*vimfiler-options-quit*
+		-quit
+		Close the vimfiler buffer after firing an action.
+
+						*vimfiler-options-winwidth*
+		-winwidth={window-width}
+		Specifies the width of a vimfiler buffer.
+
+						*vimfiler-options-winminwidth*
+		-winminwidth={window-width}
+		Specifies the minimum width of a vimfiler buffer.
+
+						*vimfiler-options-winheight*
+		-winheight={window-height}
+		Specifies the height of a vimfiler buffer.
+
+						*vimfiler-options-direction*
+		-direction={direction}
+		Defines split position rule. The default value is same to
+		|g:vimfiler_split_rule|.
+
+						*vimfiler-options-toggle*
+		-toggle
+		Close vimfiler buffer window if this vimfiler buffer name
+		window is exists.
+		Note: If you set |vimfiler-options-find|, this feature is
+		disabled.
+
+						*vimfiler-options-simple*
+		-simple
+		Enable vimfiler simple mode.
+
+						*vimfiler-options-split*
+		-split
+		Split vimfiler buffer.
+
+						*vimfiler-options-horizontal*
+		-horizontal
+		Split horizontally.
+
+						*vimfiler-options-double*
+		-double
+		Open vimfiler buffers in double mode.
+
+						*vimfiler-options-create*
+		-create
+		Create new vimfiler buffer.
+
+						*vimfiler-options-auto-cd*
+		-auto-cd
+		Enable auto cd behavior.
+		If omit it, use |g:vimfiler_enable_auto_cd|.
+		Note: This option works in file source.
+
+						*vimfiler-options-explorer*
+		-explorer
+		Enable the behavior like explorer.
+		Note: This option changes some default options.
+		For Example, hide parent directory, change some default
+		mappings ...
+
+						*vimfiler-options-reverse*
+		-reverse
+		Reverse open another vimfiler window.
+		If "-horizontal" option is enabled, will open another vimfiler
+		vertically.  If "-horizontal" option is disabled, will open
+		another vimfiler horizontally.
+
+						*vimfiler-options-project*
+		-project
+		Move to project directory.
+
+						*vimfiler-options-columns*
+		-columns={columns1:columns2:...}
+		Specify vimfiler columns. If omit it,
+		|g:vimfiler_default_columns| will be used.
+
+						*vimfiler-options-status*
+		-status
+		Display status line in vimfiler buffer.
+
+						*vimfiler-options-find*
+		-find
+		Find current file when switching.
+		Note: This option is available in exists vimfiler buffer.
 
 ==============================================================================
 COLUMNS						*vimfiler-columns*
@@ -1013,9 +1041,12 @@ https://github.com/andreafrancia/trash-cli
 Q: I want to move/copy/delete cursor file in one key.
 A: You should use |<Plug>(vimfiler_mark_current_line)|.
 >
-	nmap <buffer> c <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_copy_file)
-	nmap <buffer> m <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_move_file)
-	nmap <buffer> d <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_delete_file)
+	nmap <buffer> c
+	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_copy_file)
+	nmap <buffer> m
+	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_move_file)
+	nmap <buffer> d
+	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_delete_file)
 <
 Q: What's the key to refresh the file list?
 A: It is |<Plug>(vimfiler_redraw_screen)|. It is mapped to <C-l> by default.
@@ -1047,289 +1078,37 @@ A: You can enable status line by |vimfiler-options-status|.
 	VimFiler -status
 <
 
-==============================================================================
-CHANGELOG					*vimfiler-changelog*
+Q: What's the difference between vimfiler and NERDTree?
 
-2013-05-23
-- Optimized redraw behavior.
+A:
+Vimfiler advantages are:
+ 1. Integration with unite.vim.
+https://github.com/Shougo/unite.vim
 
-2013-05-22
-- Improved expand tree behavior.
+ 2. Integration with vimshell.
+https://github.com/Shougo/vimshell.vim
 
-2013-05-21
-- Fixed vimfiler#mappings#do_dir_action().
+ 3. More customization.
 
-2013-05-17
-- Fixed <Plug>(vimfiler_exit).
+ 4. External sources(for example, unite-ssh).
+https://github.com/Shougo/unite-ssh
 
-2013-05-14
-- Fixed vimfiler#util#delete_buffer().
+ 5. More options(see |vimfiler-options|)
 
-2013-05-11
-- Fixed -quit option behavior.
-- Fixed unexpand tree behavior.
+ 6. Fast(if you use |if_lua| enabled Vim).
 
-2013-05-09
-- Added -status option.
+ 7. Column customization.
 
-2013-05-08
-- Implemented statusline for vimfiler.
+ 8. Double screen file explorer.
 
-2013-05-02
-- Fixed column region.
-- Improved column highlight.
+ 9. Multi file renaming(see <Plug>(vimfiler_rename_file)).
 
-2013-04-14
-- Fixed explorer behavior.
-- Improved -auto-cd behavior.
+Q: I want to use the feature like |:NERDTreeFind|.
 
-2013-04-06
-- Fixed toggle tree recursive behavior.
-- Fixed filename completion behavior.
-
-2013-04-02
-- Improved redraw behavior.
-
-2013-04-01
-- Optimized for files.
-
-2013-03-31
-- Fixed <Plug>(vimfiler_toggle_simple_mode) problem.
-
-2013-03-30
-- Use python3 interface.
-
-2013-03-29
-- Improved max_width.
-
-2013-03-23
-- Fixed :VimFilerToggle problem.
-
-2013-03-20
-- Deleted vimfiler#util#smart_execute_command().
-- Fixed horizontal behavior.
-
-2013-03-16
-- Fixed mark colors.
-
-2013-03-10
-- Added <Plug>(vimfiler_mark_current_line).
-
-2013-03-09
-- Improved autocmd event.
-- Fixed cursor position problem.
-- Fixed preview file error.
-
-2013-03-03
-- Fixed syntax highlight.
-- Improved readonly highlight.
-- Fixed icon default value.
-- Fixed cursor position.
-
-2013-03-02
-- Improved redraw behavior.
-- Initialize cursor position.
-
-2013-02-24
-- Improved highlight behavior.
-
-2013-02-23
-- Removed columns line.
-- Improved columns behavior.
-- Supported number and relativenumber options.
-- Improved check redraw.
-
-2013-02-21
-- Fixed vimfiler#_switch_vimfiler() error.
-
-2013-02-16
-- Improved filename sort behavior.
-
-2013-02-11
-- Added <Plug>(vimfiler_mark_similar_lines).
-- Improved cursor behavior.
-
-2013-02-10
-- Fixed parse options.
-
-2013-02-09
-- Disabled sort in vimfiler#get_marked_files().
-
-2013-02-03
-- Fixed freeze bug.
-- Implemented columns feature.
-- Added columns line.
-- Deleted obsolete options.
-
-2013-02-02
-- Changed directory mark.
-- Refactored.
-
-2013-01-31
-- Ver.4.0 development is started.
-
-------------------------------------------------------------------------------
-ChangeLog 3.2
-
-2013-01-31
-- Fixed marker.
-- Fixed syntax file.
-
-2013-01-29
-- Improved padding.
-- Improved vimfiler marker behavior.
-
-2013-01-28
-- Restore winfix problem.
-- Fixed set syntax behavior.
-
-2013-01-25
-- Added <Plug>(vimfiler_quick_look) mapping.
-
-2013-01-23
-- Fixed redraw behavior.
-
-2013-01-22
-- Improved expand path.
-
-2013-01-20
-- Fixed vimfiler current directory behavior.
-
-2013-01-15
-- Added project option.
-
-2013-01-13
-- Improved vimfiler autocmd.
-
-2013-01-02
-- Improved initialization.
-
-2012-12-27
-- Improved get filesize in python.
-
-2012-12-25
-- Updated vital.
-
-2012-12-17
-- Improved get filetime.
-
-2012-12-13
-- Fixed vimfiler explorer behavior.
-
-2012-12-07
-- Set nobuflisted in explorer.
-
-2012-12-02
-- Fixed explorer behavior.
-
-2012-10-27
-- Improved documentation.
-- Improved sort orders.
-
-2012-10-22
-- Improved write handler.
-
-2012-10-19
-- Improved start unite behavior.
-- Improved <Plug>(vimfiler_make_directory).
-
-2012-10-09
-- Fixed function name.
-
-2012-09-25
-- Improved <Plug>(vimfiler_execute_system_associated) behavior.
-
-2012-09-20
-- Fixed autocmd behavior.
-- Fixed acwrite error.
-
-2012-09-19
-- Improved g:vimfiler_execute_file_list behavior.
-- Improved check network drives.
-- Added <BS> default mapping.
-- Added s:on_FileReadCmd().
-- Improved BufWriteCmd.
-
-2012-09-13
-- Added FAQ section.
-- Improved vimfiler/drive source.
-- Improved cd behavior.
-
-2012-09-11
-- Added <Plug>(vimfiler_double_click) mapping.
-- Added clipboard operations.
-
-2012-09-10
-- Hide parent directory in explorer mode.
-
-2012-09-09
-- Added -reverse option.
-
-2012-09-06
-- Fixed exrename relative path.
-
-2012-09-05
-- Fixed sync_with_another_vimfiler.
-- Added <Plug>(vimfiler_close) mapping.
-
-2012-09-04
-- Fixed initialization.
-
-2012-09-03
-- Fixed marks.
-- Check in expand/unexpand tree.
-- Added vimproc check.
-
-2012-09-02
-- Fixed open vimfiler buffers.
-- Fixed to sync another vimfiler.
-
-2012-09-01
-- Fixed toggle.
-- Improved switch behavior.
-- Improved simple behavior.
-- Added :VimFilerExplorer command.
-- Improved expand/unexpand tree mappings.
-- Improved to search vimfiler buffer.
-
-2012-08-31
-- Added window restore.
-- Fixed switch problem.
-- Improved move cursor behavior.
-
-2012-08-30
-- Improved rename copy behavior.
-
-2012-08-29
-- Fixed hide and exit.
-- Improved for :VimFilerDouble.
-- Added <Plug>(vimfiler_switch_to_another_vimfiler) keymapping.
-- Changed <Tab> default keymapping.
-
-2012-08-28
-- Fixed vimfiler#redraw_prompt().
-- Improved double vimfiler behavior.
-- Refactored documentation.
-- Fixed another_vimfiler_bufnr.
-
-2012-08-24
-- Added -winheight option.
-
-2012-08-22
-- Added depends.
-
-2012-08-21
-- Updated vital.
-
-2012-08-17
-- Fixed for vimfiler__writable.
-
-2012-08-15
-- Improved postfix.
-- Improved loaded check.
-
-2012-08-14
-- Ver.3.2 development is started.
+A:
+>
+	:VimFilerExplorer -find
+<
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:

@@ -18,7 +18,7 @@ set expandtab
 set autoindent
 
 " クリップボード連携
-set clipboard=unnamed,autoselect
+" set clipboard=unnamed,autoselect
 
 " Tab,行末の半角スペースを明示的に表示
 set list
@@ -38,13 +38,16 @@ if has('syntax')
 endif
 
 " 透過表示設定
-" gui
-" set transparency=240
+gui
+set transparency=240
 
 " ステータスライン設定
 " 文字コードを表示
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ (%v,%l)/%L%8P\ 
 
+" カーソル行のハイライト
+autocmd WinEnter *  setlocal cursorline
+autocmd WinLeave *  setlocal nocursorline
 
 "挿入モード時、ステータスラインの色を変更
 let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
@@ -88,17 +91,58 @@ nnoremap l <Right>zv
 autocmd InsertEnter * let &l:iminsert=0
 autocmd InsertLeave * let &l:iminsert=0
 
+autocmd QuickFixCmdPost vimgrep cw
+
+"-----------------------------
 " キーマッピング
+"-----------------------------
+" 行頭行末の左右移動で行をまたぐ
+set whichwrap=b,s,h,l,<,>,[,]  
+
+"カーソルを表示行で移動
+nnoremap j gj
+nnoremap k gk
+
 " .vimrc を別タブで開く
 nnoremap <Space>. :<C-u>tabedit $MYVIMRC<CR>
 
 " 連続貼り付け対策
 vnoremap <silent> <C-p> "0p<CR>
 
+"日時の入力補助
+inoremap <expr> ,df strftime('%Y-%m-%d %H:%M:%S')
+inoremap <expr> <C-;> strftime('%Y-%m-%d')
+inoremap <expr> ,dd strftime('%Y-%m-%d')
+inoremap <expr> ,dt strftime('%H:%M:%S')
+
+" 選択中のテキストを検索
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
+vnoremap <silent> # "vy?\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
+
+" 直前のコマンドの繰り返し
+nnoremap c. q:k<CR>
+
+" Homeキーの挙動を変更
+noremap  <Home> ^
+noremap  <Home><Home> 0
+inoremap <Home> <Esc>^i
+
+" ESCキーをウィンドウズ
+"nmap <Esc> <C-w>
+
 "-----------------------------
 " プラグイン設定
 "-----------------------------
-"
+" netrw.vim
+" netrwは常にtree view
+let g:netrw_liststyle = 3
+" CVSと.で始まるファイルは表示しない
+let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
+" 'v'でファイルを開くときは右側に開く。(デフォルトが左側なので入れ替え)
+let g:netrw_altv = 1
+" 'o'でファイルを開くときは下側に開く。(デフォルトが上側なので入れ替え)
+let g:netrw_alto = 1
+
 " Alignを日本語環境で使用するための設定
 :let g:Align_xstrlen = 3
 
@@ -130,15 +174,22 @@ NeoBundle 'https://github.com/glidenote/memolist.vim.git'
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 NeoBundle 'https://github.com/thinca/vim-quickrun'
 NeoBundle 'https://github.com/mattn/zencoding-vim'
-NeoBundle 'vim-scripts/VimRepress'
 
 
 filetype plugin on
 filetype indent on
+" Installation check.
+
+if neobundle#exists_not_installed_bundles()
+  echomsg 'Not installed bundles : ' .
+        \ string(neobundle#get_not_installed_bundle_names())
+  echomsg 'Please execute ":NeoBundleInstall" command.'
+  "finish
+endif
 
 " <TAB>: completion.                                         
-inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
+ inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
+ inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
 
 "neocomplcache/neosnippet
 let g:neocomplcache_enable_at_startup = 1
@@ -206,8 +257,4 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 "Zen-Coding
 let g:user_zen_expandabbr_key = '<c-e>'
 let g:use_zen_complete_tag = 1
-
-
-
-
 
