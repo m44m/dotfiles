@@ -81,7 +81,6 @@ function! s:GetHighlight(hi)
   return hl
 endfunction
 
-
 "左右キーで行をまたいで移動する
 set whichwrap=b,s,[,],<,>
 nnoremap h <Left>zv
@@ -91,12 +90,19 @@ nnoremap l <Right>zv
 autocmd InsertEnter * let &l:iminsert=0
 autocmd InsertLeave * let &l:iminsert=0
 
+" vimgrep時にQuickFixウィンドウを自働的に表示
 autocmd QuickFixCmdPost vimgrep cw
+
+" 折り畳み
+" :let g:xml_syntax_folding = 1
+" :set foldmethod=syntax
+
 
 "-----------------------------
 " キーマッピング
 "-----------------------------
 " 行頭行末の左右移動で行をまたぐ
+"set compatible
 set whichwrap=b,s,h,l,<,>,[,]  
 
 "カーソルを表示行で移動
@@ -124,7 +130,7 @@ nnoremap c. q:k<CR>
 
 " Homeキーの挙動を変更
 noremap  <Home> ^
-noremap  <Home><Home> 0
+" noremap  <Home><Home> 0
 inoremap <Home> <Esc>^i
 
 " ESCキーをウィンドウズ
@@ -174,7 +180,7 @@ NeoBundle 'https://github.com/glidenote/memolist.vim.git'
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 NeoBundle 'https://github.com/thinca/vim-quickrun'
 NeoBundle 'https://github.com/mattn/zencoding-vim'
-
+NeoBundle 'https://github.com/thinca/vim-singleton.git'
 
 filetype plugin on
 filetype indent on
@@ -187,12 +193,14 @@ if neobundle#exists_not_installed_bundles()
   "finish
 endif
 
+
 " <TAB>: completion.                                         
  inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
 
 "neocomplcache/neosnippet
 let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_cursor_hold_i = 1
 let g:neosnippet#snippets_directory = '~/.vim/snippets'
 
 " neosnippet-examples から引用 ------------------
@@ -230,6 +238,10 @@ nnoremap <silent> [unite]m :<C-u>Unite<Space>file_mru<CR>
 nnoremap <silent> [unite]r :<C-u>UniteWithBufferDir<CR>
 nnoremap <silent> ,vr :UniteResume<CR>
 
+" vimfiler.vim
+" IDE風に起動
+command! VimIde :VimFiler -split -simple -winwidth=50 -no-quit
+
 " vinarise
 let g:vinarise_enable_auto_detect = 1
  
@@ -257,4 +269,8 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 "Zen-Coding
 let g:user_zen_expandabbr_key = '<c-e>'
 let g:use_zen_complete_tag = 1
+
+"vim-singleton
+call singleton#enable()
+
 

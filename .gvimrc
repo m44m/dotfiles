@@ -34,7 +34,8 @@ set guioptions-=T
 set showtabline=2
 
 "カラー設定:
-colorscheme phd
+"colorscheme phd
+colorscheme molokai
 
 
 "フォント設定
@@ -46,8 +47,8 @@ elseif has('unix')
 elseif has('mac')
   set guifont=Ricty:h14
 elseif has('win32') || has('win64')
-   set guifont=Consolas:h10:cSHIFTJIS
-   set guifontwide=MigMix_1M:h8:cSHIFTJIS
+   set guifont=Consolas:h9:cSHIFTJIS
+   set guifontwide=MigMix_1M:h9:cSHIFTJIS
 endif
 
 "印刷用フォント
@@ -58,42 +59,47 @@ if has('printer')
   endif
 endif
 
-""""""""""""""""""""""""""""""
-"Window位置の保存と復帰
-""""""""""""""""""""""""""""""
-if has('unix')
-  let s:infofile = '~/.vim/.vimpos'
-else
-  let s:infofile = '~/_vimpos'
-endif
+" """"""""""""""""""""""""""""""
+" "Window位置の保存と復帰
+" """"""""""""""""""""""""""""""
+" if has('unix')
+"   let s:infofile = '~/.vim/.vimpos'
+" else
+"   let s:infofile = '~/_vimpos'
+" endif
+" 
+" function! s:SaveWindowParam(filename)
+"   redir => pos
+"   exec 'winpos'
+"   redir END
+"   let pos = matchstr(pos, 'X[-0-9 ]\+,\s*Y[-0-9 ]\+$')
+"   let file = expand(a:filename)
+"   let str = []
+"   let cmd = 'winpos '.substitute(pos, '[^-0-9 ]', '', 'g')
+"   cal add(str, cmd)
+"   let l = &lines
+"   let c = &columns
+"   cal add(str, 'set lines='. l.' columns='. c)
+"   silent! let ostr = readfile(file)
+"   if str != ostr
+"     call writefile(str, file)
+"   endif
+" endfunction
+" 
+" augroup SaveWindowParam
+"   autocmd!
+"   execute 'autocmd SaveWindowParam VimLeave * call s:SaveWindowParam("'.s:infofile.'")'
+" augroup END
+" 
+" if filereadable(expand(s:infofile))
+"   execute 'source '.s:infofile
+" endif
+" unlet s:infofile
 
-"function! s:SaveWindowParam(filename)
-"  redir => pos
-"  exec 'winpos'
-"  redir END
-"  let pos = matchstr(pos, 'X[-0-9 ]\+,\s*Y[-0-9 ]\+$')
-"  let file = expand(a:filename)
-"  let str = []
-"  let cmd = 'winpos '.substitute(pos, '[^-0-9 ]', '', 'g')
-"  cal add(str, cmd)
-"  let l = &lines
-"  let c = &columns
-"  cal add(str, 'set lines='. l.' columns='. c)
-"  silent! let ostr = readfile(file)
-"  if str != ostr
-"    call writefile(str, file)
-"  endif
-"endfunction
+" Windowwの初期サイズ
+set lines=40
+set columns=120
 
-"augroup SaveWindowParam
-"  autocmd!
-"  execute 'autocmd SaveWindowParam VimLeave * call s:SaveWindowParam("'.s:infofile.'")'
-"augroup END
-
-if filereadable(expand(s:infofile))
-  execute 'source '.s:infofile
-endif
-unlet s:infofile
 
 set wrap!
 
