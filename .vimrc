@@ -195,8 +195,9 @@ endif
 
 
 " <TAB>: completion.                                         
- inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
- inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
+ inoremap <expr><TAB>    pumvisible() ? "\<C-k>" : "\<TAB>"   
+" inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
+" inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
 
 "neocomplcache/neosnippet
 let g:neocomplcache_enable_at_startup = 1
