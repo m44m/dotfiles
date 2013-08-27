@@ -4,6 +4,9 @@ scriptencoding cp932
 set nowritebackup
 set nobackup
 
+" スワップファイルの作成先
+set directory=~/.vim/swap
+
 " 行番号表示
 set number
 
@@ -181,6 +184,17 @@ NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 NeoBundle 'https://github.com/thinca/vim-quickrun'
 NeoBundle 'https://github.com/mattn/zencoding-vim'
 NeoBundle 'https://github.com/thinca/vim-singleton.git'
+NeoBundle 'https://github.com/tpope/vim-surround'
+
+"Omnisharp
+NeoBundleLazy 'https://github.com/nosami/Omnisharp', {
+\   'autoload': {'filetypes': ['cs']},
+\   'build': {
+\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
+\     'mac': 'xbuild server/OmniSharp.sln',
+\     'unix': 'xbuild server/OmniSharp.sln',
+\   }
+\ }
 
 filetype plugin on
 filetype indent on
@@ -195,9 +209,9 @@ endif
 
 
 " <TAB>: completion.                                         
- inoremap <expr><TAB>    pumvisible() ? "\<C-k>" : "\<TAB>"   
-" inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
-" inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
+"inoremap <expr><CR>     pumvisible() ? neocomplcache#close_popup(): "\<CR>"
+inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
 
 "neocomplcache/neosnippet
 let g:neocomplcache_enable_at_startup = 1
@@ -273,5 +287,4 @@ let g:use_zen_complete_tag = 1
 
 "vim-singleton
 call singleton#enable()
-
 

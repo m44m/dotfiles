@@ -403,6 +403,7 @@ alignusage	Align.txt	/*alignusage*
 b:neocomplcache_sources_list	neocomplcache.txt	/*b:neocomplcache_sources_list*
 b:quickrun_config	quickrun.txt	/*b:quickrun_config*
 buffer_complete	neocomplcache.txt	/*buffer_complete*
+cs	surround.txt	/*cs*
 ctrlp-changelog	ctrlp.txt	/*ctrlp-changelog*
 ctrlp-commands	ctrlp.txt	/*ctrlp-commands*
 ctrlp-contents	ctrlp.txt	/*ctrlp-contents*
@@ -416,6 +417,7 @@ ctrlp-miscellaneous-configs	ctrlp.txt	/*ctrlp-miscellaneous-configs*
 ctrlp-options	ctrlp.txt	/*ctrlp-options*
 ctrlp.txt	ctrlp.txt	/*ctrlp.txt*
 dictionary_complete	neocomplcache.txt	/*dictionary_complete*
+ds	surround.txt	/*ds*
 filename_complete	neocomplcache.txt	/*filename_complete*
 filename_include	neocomplcache.txt	/*filename_include*
 g:AlignSkip	Align.txt	/*g:AlignSkip*
@@ -740,6 +742,8 @@ i_<Plug>(vimshell_move_previous_window)	vimshell.txt	/*i_<Plug>(vimshell_move_pr
 i_<Plug>(vimshell_push_current_line)	vimshell.txt	/*i_<Plug>(vimshell_push_current_line)*
 i_<Plug>(vimshell_run_help)	vimshell.txt	/*i_<Plug>(vimshell_run_help)*
 i_<Plug>(vimshell_zsh_complete)	vimshell.txt	/*i_<Plug>(vimshell_zsh_complete)*
+i_CTRL-G_S	surround.txt	/*i_CTRL-G_S*
+i_CTRL-G_s	surround.txt	/*i_CTRL-G_s*
 include_complete	neocomplcache.txt	/*include_complete*
 member_complete	neocomplcache.txt	/*member_complete*
 memolist	memolist.txt	/*memolist*
@@ -1039,6 +1043,13 @@ singleton-introduction	singleton.txt	/*singleton-introduction*
 singleton-limitation	singleton.txt	/*singleton-limitation*
 singleton-pattern	singleton.txt	/*singleton-pattern*
 singleton.txt	singleton.txt	/*singleton.txt*
+surround	surround.txt	/*surround*
+surround-customizing	surround.txt	/*surround-customizing*
+surround-issues	surround.txt	/*surround-issues*
+surround-mappings	surround.txt	/*surround-mappings*
+surround-replacements	surround.txt	/*surround-replacements*
+surround-targets	surround.txt	/*surround-targets*
+surround.txt	surround.txt	/*surround.txt*
 syntax_complete	neocomplcache.txt	/*syntax_complete*
 tags_complete	neocomplcache.txt	/*tags_complete*
 unite#action#do_candidates()	unite.txt	/*unite#action#do_candidates()*
@@ -1292,10 +1303,12 @@ unite-usage	unite.txt	/*unite-usage*
 unite-variables	unite.txt	/*unite-variables*
 unite.txt	unite.txt	/*unite.txt*
 unite_default_key_mappings	unite.txt	/*unite_default_key_mappings*
+vS	surround.txt	/*vS*
 v_<C-Y>,	zencoding.txt	/*v_<C-Y>,*
 v_<Plug>(unite_toggle_selected_candidates)	unite.txt	/*v_<Plug>(unite_toggle_selected_candidates)*
 v_<Plug>(vimshell_select_next_prompt)	vimshell.txt	/*v_<Plug>(vimshell_select_next_prompt)*
 v_<Plug>(vimshell_select_previous_prompt)	vimshell.txt	/*v_<Plug>(vimshell_select_previous_prompt)*
+vgS	surround.txt	/*vgS*
 vim_complete	neocomplcache.txt	/*vim_complete*
 vimfiler	vimfiler.txt	/*vimfiler*
 vimfiler#do_action()	vimfiler.txt	/*vimfiler#do_action()*
@@ -1504,6 +1517,10 @@ vimshell.txt	vimshell.txt	/*vimshell.txt*
 x_<Plug>(neosnippet_expand_target)	neosnippet.txt	/*x_<Plug>(neosnippet_expand_target)*
 x_<Plug>(neosnippet_register_oneshot_snippet)	neosnippet.txt	/*x_<Plug>(neosnippet_register_oneshot_snippet)*
 x_<Plug>(neosnippet_start_unite_snippet_target)	neosnippet.txt	/*x_<Plug>(neosnippet_start_unite_snippet_target)*
+yS	surround.txt	/*yS*
+ySS	surround.txt	/*ySS*
+ys	surround.txt	/*ys*
+yss	surround.txt	/*yss*
 zencoding	zencoding.txt	/*zencoding*
 zencoding-balance-tag-inward	zencoding.txt	/*zencoding-balance-tag-inward*
 zencoding-balance-tag-outward	zencoding.txt	/*zencoding-balance-tag-outward*

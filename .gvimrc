@@ -47,8 +47,10 @@ elseif has('unix')
 elseif has('mac')
   set guifont=Ricty:h14
 elseif has('win32') || has('win64')
-   set guifont=Consolas:h9:cSHIFTJIS
-   set guifontwide=MigMix_1M:h9:cSHIFTJIS
+"   set guifont=Consolas:h9:cSHIFTJIS
+"   set guifontwide=MigMix_1M:h9:cSHIFTJIS
+   set guifont=Migu\ 1M:h10
+   set guifontwide=Migu\ 1M:h10
 endif
 
 "印刷用フォント
