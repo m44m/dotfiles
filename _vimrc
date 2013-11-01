@@ -1,33 +1,38 @@
 scriptencoding cp932
 
-" ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã—ãªã„
+" ‹N“®‚ÌƒpƒX
+if expand("%") == ''
+  cd ~
+endif
+
+" ƒoƒbƒNƒAƒbƒvƒtƒ@ƒCƒ‹‚ğì¬‚µ‚È‚¢
 set nowritebackup
 set nobackup
 
-" ã‚¹ãƒ¯ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆå…ˆ
+" ƒXƒƒbƒvƒtƒ@ƒCƒ‹‚Ìì¬æ
 set directory=~/.vim/swap
 
-" è¡Œç•ªå·è¡¨ç¤º
+" s”Ô†•\¦
 set number
 
-" æ‹¬å¼§ã®å¯¾å¿œè¡¨ç¤ºæ™‚é–“
+" Š‡ŒÊ‚Ì‘Î‰•\¦ŠÔ
 :set showmatch matchtime=1
 
-"ã‚¿ãƒ–è¨­å®š
+"ƒ^ƒuİ’è
 set ts=2 sw=2 sts=2
 set expandtab
 
-"è‡ªåƒã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆ
+"©“­ƒCƒ“ƒfƒ“ƒg
 set autoindent
 
-" ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰é€£æº
+" ƒNƒŠƒbƒvƒ{[ƒh˜AŒg
 " set clipboard=unnamed,autoselect
 
-" Tab,è¡Œæœ«ã®åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã‚’æ˜ç¤ºçš„ã«è¡¨ç¤º
+" Tab,s––‚Ì”¼ŠpƒXƒy[ƒX‚ğ–¾¦“I‚É•\¦
 set list
 set listchars=tab:^\ ,trail:~,extends:\
 
-" å…¨è§’ã‚¹ãƒšãƒ¼ã‚¹ã‚’è¡¨ç¤º
+" ‘SŠpƒXƒy[ƒX‚ğ•\¦
 function! ZenkakuSpace()
   highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
 endfunction
@@ -35,24 +40,24 @@ if has('syntax')
   augroup ZenkakuSpace
     autocmd!
     autocmd ColorScheme       * call ZenkakuSpace()
-    autocmd VimEnter,WinEnter * match ZenkakuSpace /ã€€/
+    autocmd VimEnter,WinEnter * match ZenkakuSpace /@/
   augroup END
   call ZenkakuSpace()
 endif
 
-" é€éè¡¨ç¤ºè¨­å®š
+" “§‰ß•\¦İ’è
 gui
-set transparency=240
+set transparency=225
 
-" ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ©ã‚¤ãƒ³è¨­å®š
-" æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’è¡¨ç¤º
+" ƒXƒe[ƒ^ƒXƒ‰ƒCƒ“İ’è
+" •¶šƒR[ƒh‚ğ•\¦
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ (%v,%l)/%L%8P\ 
 
-" ã‚«ãƒ¼ã‚½ãƒ«è¡Œã®ãƒã‚¤ãƒ©ã‚¤ãƒˆ
+" ƒJ[ƒ\ƒ‹s‚ÌƒnƒCƒ‰ƒCƒg
 autocmd WinEnter *  setlocal cursorline
 autocmd WinLeave *  setlocal nocursorline
 
-"æŒ¿å…¥ãƒ¢ãƒ¼ãƒ‰æ™‚ã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ©ã‚¤ãƒ³ã®è‰²ã‚’å¤‰æ›´
+"‘}“üƒ‚[ƒhAƒXƒe[ƒ^ƒXƒ‰ƒCƒ“‚ÌF‚ğ•ÏX
 let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
 
 if has('syntax')
@@ -84,78 +89,94 @@ function! s:GetHighlight(hi)
   return hl
 endfunction
 
-"å·¦å³ã‚­ãƒ¼ã§è¡Œã‚’ã¾ãŸã„ã§ç§»å‹•ã™ã‚‹
+"¶‰EƒL[‚Ås‚ğ‚Ü‚½‚¢‚ÅˆÚ“®‚·‚é
 set whichwrap=b,s,[,],<,>
 nnoremap h <Left>zv
 nnoremap l <Right>zv
 
-" æŒ¿å…¥ãƒ¢ãƒ¼ãƒ‰ã«ç§»è¡Œ/æŠœã‘ã‚‹éš›ã«IMEãƒ¢ãƒ¼ãƒ‰ã‚’è§£é™¤
+" ‘}“üƒ‚[ƒh‚ÉˆÚs/”²‚¯‚éÛ‚ÉIMEƒ‚[ƒh‚ğ‰ğœ
 autocmd InsertEnter * let &l:iminsert=0
 autocmd InsertLeave * let &l:iminsert=0
 
-" vimgrepæ™‚ã«QuickFixã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è‡ªåƒçš„ã«è¡¨ç¤º
+" vimgrep‚ÉQuickFixƒEƒBƒ“ƒhƒE‚ğ©“­“I‚É•\¦
 autocmd QuickFixCmdPost vimgrep cw
 
-" æŠ˜ã‚Šç•³ã¿
+" Ü‚èô‚İ
 " :let g:xml_syntax_folding = 1
 " :set foldmethod=syntax
 
-
 "-----------------------------
-" ã‚­ãƒ¼ãƒãƒƒãƒ”ãƒ³ã‚°
+" ƒL[ƒ}ƒbƒsƒ“ƒO
 "-----------------------------
-" è¡Œé ­è¡Œæœ«ã®å·¦å³ç§»å‹•ã§è¡Œã‚’ã¾ãŸã
+" s“ªs––‚Ì¶‰EˆÚ“®‚Ås‚ğ‚Ü‚½‚®
 "set compatible
 set whichwrap=b,s,h,l,<,>,[,]  
 
-"ã‚«ãƒ¼ã‚½ãƒ«ã‚’è¡¨ç¤ºè¡Œã§ç§»å‹•
+"ƒJ[ƒ\ƒ‹‚ğ•\¦s‚ÅˆÚ“®
 nnoremap j gj
 nnoremap k gk
 
-" .vimrc ã‚’åˆ¥ã‚¿ãƒ–ã§é–‹ã
+" .vimrc ‚ğ•Êƒ^ƒu‚ÅŠJ‚­
 nnoremap <Space>. :<C-u>tabedit $MYVIMRC<CR>
 
-" é€£ç¶šè²¼ã‚Šä»˜ã‘å¯¾ç­–
+" ˜A‘±“\‚è•t‚¯‘Îô
 vnoremap <silent> <C-p> "0p<CR>
 
-"æ—¥æ™‚ã®å…¥åŠ›è£œåŠ©
+"“ú‚Ì“ü—Í•â•
 inoremap <expr> ,df strftime('%Y-%m-%d %H:%M:%S')
 inoremap <expr> <C-;> strftime('%Y-%m-%d')
 inoremap <expr> ,dd strftime('%Y-%m-%d')
 inoremap <expr> ,dt strftime('%H:%M:%S')
 
-" é¸æŠä¸­ã®ãƒ†ã‚­ã‚¹ãƒˆã‚’æ¤œç´¢
+" ‘I‘ğ’†‚ÌƒeƒLƒXƒg‚ğŒŸõ
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
 vnoremap <silent> # "vy?\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
 
-" ç›´å‰ã®ã‚³ãƒãƒ³ãƒ‰ã®ç¹°ã‚Šè¿”ã—
+" ’¼‘O‚ÌƒRƒ}ƒ“ƒh‚ÌŒJ‚è•Ô‚µ
 nnoremap c. q:k<CR>
 
-" Homeã‚­ãƒ¼ã®æŒ™å‹•ã‚’å¤‰æ›´
+" HomeƒL[‚Ì‹““®‚ğ•ÏX
 noremap  <Home> ^
 " noremap  <Home><Home> 0
 inoremap <Home> <Esc>^i
 
-" ESCã‚­ãƒ¼ã‚’ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚º
+" ESCƒL[‚ğƒEƒBƒ“ƒhƒEƒY
 "nmap <Esc> <C-w>
 
+" “ú•tA‚Ì‘}“ü
+noremap! <Leader>date <C-R>=strftime('%Y/%m/%d')<CR>
+noremap! <Leader>time <C-R>=strftime('%H:%M')<CR>
+noremap! <Leader>tstamp <C-R>=strftime('%Y%m%d%H%M')<CR>
+noremap! <Leader>dstamp <C-R>=strftime('%Y%m%d')<CR>
+
+"ˆ³k
+command! Zip :! 7z.exe a -p %:r.zip %
+
 "-----------------------------
-" ãƒ—ãƒ©ã‚°ã‚¤ãƒ³è¨­å®š
+" ƒvƒ‰ƒOƒCƒ“İ’è
 "-----------------------------
 " netrw.vim
-" netrwã¯å¸¸ã«tree view
+" netrw‚Íí‚Étree view
 let g:netrw_liststyle = 3
-" CVSã¨.ã§å§‹ã¾ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã¯è¡¨ç¤ºã—ãªã„
+" CVS‚Æ.‚Ån‚Ü‚éƒtƒ@ƒCƒ‹‚Í•\¦‚µ‚È‚¢
 let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
-" 'v'ã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã¯å³å´ã«é–‹ãã€‚(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãŒå·¦å´ãªã®ã§å…¥ã‚Œæ›¿ãˆ)
+" 'v'‚Åƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚Í‰E‘¤‚ÉŠJ‚­B(ƒfƒtƒHƒ‹ƒg‚ª¶‘¤‚È‚Ì‚Å“ü‚ê‘Ö‚¦)
 let g:netrw_altv = 1
-" 'o'ã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã¯ä¸‹å´ã«é–‹ãã€‚(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãŒä¸Šå´ãªã®ã§å…¥ã‚Œæ›¿ãˆ)
+" 'o'‚Åƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚Í‰º‘¤‚ÉŠJ‚­B(ƒfƒtƒHƒ‹ƒg‚ªã‘¤‚È‚Ì‚Å“ü‚ê‘Ö‚¦)
 let g:netrw_alto = 1
 
-" Alignã‚’æ—¥æœ¬èªç’°å¢ƒã§ä½¿ç”¨ã™ã‚‹ãŸã‚ã®è¨­å®š
+"SSHƒNƒ‰ƒCƒAƒ“ƒgİ’è
+if (has('win32') || has('win64'))
+  "use scp
+  let g:netrw_scp_cmd     = "C:\\PuTTY\\pscp.exe -q -batch"
+  let g:netrw_sftp_cmd    = "C:\\PuTTY\\psftp.exe"
+  let g:netrw_ssh_cmd     = "C:\\PuTTY\\plink.exe"
+endif
+
+" Align‚ğ“ú–{ŒêŠÂ‹«‚Åg—p‚·‚é‚½‚ß‚Ìİ’è
 :let g:Align_xstrlen = 3
 
-"TeraTermãƒã‚¯ãƒ­ã®ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰å®šç¾©
+"TeraTermƒ}ƒNƒ‚ÌƒL[ƒ[ƒh’è‹`
 autocmd BufWinEnter,BufNewFile *.ttl setlocal filetype=ttl
 " for NERD_commenter
 autocmd Filetype ttl setlocal commentstring=;\ %s
@@ -172,6 +193,12 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
+" ‚·‚Å‚ÉƒCƒ“ƒXƒ^ƒ“ƒX‚ª‚ ‚éê‡‚Í‚»‚Á‚¿‚ÅŠJ‚­
+if has('clientserver')
+    NeoBundle 'https://github.com/thinca/vim-singleton'
+    call singleton#enable()
+endif
+
 NeoBundle 'https://github.com/Shougo/neocomplcache.git'
 NeoBundle 'https://github.com/Shougo/neosnippet.git'
 NeoBundle 'https://github.com/Shougo/unite.vim.git'
@@ -182,9 +209,15 @@ NeoBundle 'https://github.com/vim-scripts/Align.git'
 NeoBundle 'https://github.com/glidenote/memolist.vim.git'
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 NeoBundle 'https://github.com/thinca/vim-quickrun'
-NeoBundle 'https://github.com/mattn/zencoding-vim'
-NeoBundle 'https://github.com/thinca/vim-singleton.git'
+NeoBundle 'https://github.com/mattn/emmet-vim'
+NeoBundle 'https://github.com/thinca/vim-singleton'
 NeoBundle 'https://github.com/tpope/vim-surround'
+NeoBundle 'https://github.com/ujihisa/vimshell-ssh'
+" JavaScript
+NeoBundle 'https://github.com/teramako/jscomplete-vim.git'
+NeoBundle 'https://github.com/scrooloose/syntastic.git'
+
+
 
 "Omnisharp
 NeoBundleLazy 'https://github.com/nosami/Omnisharp', {
@@ -195,6 +228,9 @@ NeoBundleLazy 'https://github.com/nosami/Omnisharp', {
 \     'unix': 'xbuild server/OmniSharp.sln',
 \   }
 \ }
+
+" vim-javascript-syntax
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
 filetype plugin on
 filetype indent on
@@ -209,7 +245,7 @@ endif
 
 
 " <TAB>: completion.                                         
-"inoremap <expr><CR>     pumvisible() ? neocomplcache#close_popup(): "\<CR>"
+inoremap <expr><CR>     pumvisible() ? neocomplcache#close_popup(): "\<CR>"
 inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"   
 inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
 
@@ -218,7 +254,7 @@ let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_cursor_hold_i = 1
 let g:neosnippet#snippets_directory = '~/.vim/snippets'
 
-" neosnippet-examples ã‹ã‚‰å¼•ç”¨ ------------------
+" neosnippet-examples ‚©‚çˆø—p ------------------
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -239,7 +275,7 @@ if has('conceal')
 endif
 
 " Enable snipMate compatibility feature.
-" let g:neosnippet#enable_snipmate_compatibility = 1
+ let g:neosnippet#enable_snipmate_compatibility = 1
 " -----------------------------------------------
 
 " unite.vim
@@ -254,8 +290,8 @@ nnoremap <silent> [unite]r :<C-u>UniteWithBufferDir<CR>
 nnoremap <silent> ,vr :UniteResume<CR>
 
 " vimfiler.vim
-" IDEé¢¨ã«èµ·å‹•
-command! VimIde :VimFiler -split -simple -winwidth=50 -no-quit
+" IDE•—‚É‹N“®
+command! Ide :VimFiler -split -simple -winwidth=50 -no-quit
 
 " vinarise
 let g:vinarise_enable_auto_detect = 1
@@ -265,26 +301,49 @@ nnoremap <silent> ,vb :Unite build<CR>
 nnoremap <silent> ,vcb :Unite build:!<CR>
 nnoremap <silent> ,vch :UniteBuildClearHighlight<CR>
 
-" ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’åˆ†å‰²ã—ã¦é–‹ã
+" ƒEƒBƒ“ƒhƒE‚ğ•ªŠ„‚µ‚ÄŠJ‚­
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç¸¦ã«åˆ†å‰²ã—ã¦é–‹ã
+" ƒEƒBƒ“ƒhƒE‚ğc‚É•ªŠ„‚µ‚ÄŠJ‚­
 au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
 au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-" ESCã‚­ãƒ¼ã‚’2å›æŠ¼ã™ã¨çµ‚äº†ã™ã‚‹
+" ESCƒL[‚ğ2‰ñ‰Ÿ‚·‚ÆI—¹‚·‚é
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
 " ctrlp
 " let g:ctrlp_use_migemo = 1
-" let g:ctrlp_clear_cache_on_exit = 0   " çµ‚äº†æ™‚ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã‚¯ãƒªã‚¢ã—ãªã„
-" let g:ctrlp_mruf_max            = 500 " MRUã®æœ€å¤§è¨˜éŒ²æ•°
-" let g:ctrlp_open_new_file       = 1   " æ–°è¦ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆæ™‚ã«ã‚¿ãƒ–ã§é–‹ã
+" let g:ctrlp_clear_cache_on_exit = 0   " I—¹ƒLƒƒƒbƒVƒ…‚ğƒNƒŠƒA‚µ‚È‚¢
+" let g:ctrlp_mruf_max            = 500 " MRU‚ÌÅ‘å‹L˜^”
+" let g:ctrlp_open_new_file       = 1   " V‹Kƒtƒ@ƒCƒ‹ì¬‚Éƒ^ƒu‚ÅŠJ‚­
 
-"Zen-Coding
-let g:user_zen_expandabbr_key = '<c-e>'
-let g:use_zen_complete_tag = 1
+"emmet-vim
+let g:user_emmet_expandabbr_key = '<c-e>'
+let g:use_emmet_complete_tag = 1
 
 "vim-singleton
 call singleton#enable()
 
+" Closure Linter
+" refer to:
+" http://www.curiosity-drives.me/2012/01/vimjavascript.html
+" #•¶–@ƒ`ƒFƒbƒN
+"autocmd FileType javascript :compiler gjslint
+"autocmd QuickfixCmdPost make copen
+" -> Windwos(7 x64)‚Ågjslint‚ª“®‚©‚È‚©‚Á‚½...
+
+" jscomplete-vim {{{
+autocmd FileType javascript
+  \ :setl omnifunc=jscomplete#CompleteJS
+" DOM‚ÆMozillaŠÖ˜A‚ÆES6‚Ìƒƒ\ƒbƒh‚ğ•âŠ®
+let g:jscomplete_use = ['dom', 'moz', 'es6th']
+" }}}
+
+" syntastic {{{
+let g:syntastic_javascript_checker = "jshint"
+let g:syntastic_mode_map = {
+      \  'mode': 'active',
+      \ 'active_filetypes': ['ruby', 'javascript'],
+      \ 'passive_filetypes': []
+      \ }
+" }}}

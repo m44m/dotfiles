@@ -34,8 +34,8 @@ set guioptions-=T
 set showtabline=2
 
 "カラー設定:
-"colorscheme phd
-colorscheme molokai
+colorscheme phd
+"colorscheme molokai
 
 
 "フォント設定
@@ -47,10 +47,13 @@ elseif has('unix')
 elseif has('mac')
   set guifont=Ricty:h14
 elseif has('win32') || has('win64')
-"   set guifont=Consolas:h9:cSHIFTJIS
+"   set guifont=Consolas:h11
 "   set guifontwide=MigMix_1M:h9:cSHIFTJIS
-   set guifont=Migu\ 1M:h10
-   set guifontwide=Migu\ 1M:h10
+"   set guifont=Ubuntu\ Mono:h12:cDEFAULT guifontwide=Migu\ 2m:h12:cDEFAULT
+"   set guifont=Migu\ 2m:h11:cDEFAULT guifontwide=Migu\ 2m:h11:cDEFAULT
+"   set guifont=M+\ 1mn\ regular:h10:w6:cDEFAULT guifontwide=M+\ 1mn\ regular:h10:w6:cDEFAULT
+"   set guifont=Ricty\ Diminished:h12:cDEFAULT guifontwide=Ricty\ Diminished:h12:cDEFAULT
+   set guifont=Ricty\ Diminished\ Discord:h12:cDEFAULT guifontwide=Ricty\ Diminished\ Discord:h12:cDEFAULT
 endif
 
 "印刷用フォント
