@@ -29,14 +29,14 @@ endif
 " ツールバーを非表示
 set guioptions-=T
 " コマンドラインの高さ
- set cmdheight=2
+set cmdheight=2
 
 set showtabline=2
 
 "カラー設定:
-colorscheme phd
+"colorscheme phd
+"autocmd ColorScheme * highlight Comment guifg=#9C9884
 "colorscheme molokai
-
 
 "フォント設定
 "フォントは英語名で指定すると問題が起きにくくなります
