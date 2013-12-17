@@ -7,6 +7,9 @@ set nobackup
 " スワップファイルの作成先
 set directory=~/.vim/swap
 
+" Color Scheme (Vim用)
+colorscheme molokai
+
 " 行番号表示
 set number
 
@@ -41,8 +44,8 @@ if has('syntax')
 endif
 
 " 透過表示設定
-gui
-set transparency=240
+"gui
+"set transparency=240
 
 " ステータスライン設定
 " 文字コードを表示
@@ -86,8 +89,8 @@ endfunction
 
 "左右キーで行をまたいで移動する
 set whichwrap=b,s,[,],<,>
-nnoremap h <Left>zv
-nnoremap l <Right>zv
+"nnoremap h <Left>zv
+"nnoremap l <Right>zv
 
 " 挿入モードに移行/抜ける際にIMEモードを解除
 autocmd InsertEnter * let &l:iminsert=0
@@ -177,7 +180,16 @@ NeoBundle 'https://github.com/Shougo/neosnippet.git'
 NeoBundle 'https://github.com/Shougo/unite.vim.git'
 NeoBundle 'https://github.com/Shougo/vimfiler.git'
 NeoBundle 'https://github.com/Shougo/vimshell.git'
-NeoBundle 'https://github.com/Shougo/vimproc.git'
+NeoBundle 'https://github.com/Shougo/vimproc.git', { 
+  \ 'build' : { 
+    \ 'windows' : 'make -f make_mingw32.mak', 
+    \ 'cygwin'  : 'make -f make_cygwin.mak',
+    \ 'mac'     : 'make -f make_mac.mak',
+    \ 'unix'    : 'make -f make_unix.mak',
+  \ },
+\}
+
+
 NeoBundle 'https://github.com/vim-scripts/Align.git'
 NeoBundle 'https://github.com/glidenote/memolist.vim.git'
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
