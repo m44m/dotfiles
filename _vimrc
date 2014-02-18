@@ -172,13 +172,13 @@ autocmd QuickFixCmdPost vimgrep cw
 " {{{
 
 " 行頭行末の左右移動で行をまたぐ
-"set compatible
+"set nocompatible
 "set whichwrap=b,s,h,l,<,>,[,]  
 
 "左右キーで行をまたいで移動する
- set whichwrap=b,s,[,],<,>
- nnoremap h <Left>zv
- nnoremap l <Right>zv
+"set whichwrap=b,s,[,],<,>
+"nnoremap h <Left>zv
+"nnoremap l <Right>zv
 
 
 "カーソルを表示行で移動
@@ -187,6 +187,9 @@ nnoremap k gk
 
 " .vimrc を別タブで開く
 nnoremap <Space>. :<C-u>tabedit $MYVIMRC<CR>
+
+" 行末までヤンク
+nnoremap Y y$
 
 " 連続貼り付け対策
 vnoremap <silent> <C-p> "0p<CR>
@@ -309,7 +312,7 @@ NeoBundle 'https://github.com/Shougo/vimproc.git', {
 \}
 NeoBundle 'vim-scripts/Align.git'
 NeoBundle 'glidenote/memolist.vim.git'
-"NeoBundle 'kien/ctrlp.vim.git'
+NeoBundle 'kien/ctrlp.vim.git'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'mattn/emmet-vim'
 "NeoBundle 'thinca/vim-singleton'
@@ -317,11 +320,16 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'scrooloose/nerdtree.git'
+NeoBundle 'nathanaelkane/vim-indent-guides.git'
+
 
 " JavaScript
 NeoBundle 'teramako/jscomplete-vim.git'
 NeoBundle 'scrooloose/syntastic.git'
 NeoBundle 'felixge/vim-nodejs-errorformat'
+"NeoBundle 'JavaScript-syntax'
+"NeoBundle 'pangloss/vim-javascript'
+"NeoBundle 'vim-scripts/JavaScript-Indent'
 
 "Omnisharp
 NeoBundleLazy 'nosami/Omnisharp', {
@@ -335,6 +343,17 @@ NeoBundleLazy 'nosami/Omnisharp', {
 
 " vim-javascript-syntax
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+
+" tern for vim
+"if has('python') && executable('npm')
+"  NeoBundleLazy 'marijnh/tern_for_vim', {
+"        \ 'build' : 'npm install',
+"        \ 'autoload' : {
+"        \   'functions': ['tern#Complete', 'tern#Enable'],
+"        \   'filetypes' : 'javascript'
+"        \ }}
+"endif
+"NeoBundle 'marijnh/tern_for_vim'
 
 "colorscheme
 NeoBundle 'w0ng/vim-hybrid'
@@ -415,7 +434,7 @@ inoremap <expr><C-e> neocomplete#cancel_popup()
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
@@ -493,6 +512,13 @@ command! Ide :VimFiler -split -simple -winwidth=50 -no-quit
 let g:vinarise_enable_auto_detect = 1
 " }}}
 
+" ctrlp {{{
+let g:ctrlp_use_migemo = 1
+let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
+let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
+let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
+" }}}
+
 "emmet-vim {{{
 let g:user_emmet_expandabbr_key = '<c-e>'
 let g:use_emmet_complete_tag = 1
@@ -518,16 +544,26 @@ endif
 " jscomplete-vim {{{
 autocmd FileType javascript
   \ :setl omnifunc=jscomplete#CompleteJS
+"let g:neobundle_souce_rank = {
+"  \ 'jscomplete' : 500,
+"  \}
 " DOMとMozilla関連とES6のメソッドを補完
 let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " }}}
 
 " syntastic {{{
-let g:syntastic_javascript_checker = "jshint"
+let g:syntastic_javascript_checkers = ["jshint"]
 "let g:syntastic_javascript_jshint_conf = "~/_jshintrc"
 let g:syntastic_mode_map = {
       \ 'mode': 'active',
       \ 'active_filetypes': ['ruby', 'javascript'],
       \ 'passive_filetypes': []
       \ }
+" }}}
+
+" vim-indent-guides {{{
+ let g:indent_guides_start_level = 2
+ let g:indent_guides_enable_on_vim_startup = 1
+ let g:indent_guides_color_change_percent = 5
+ let g:indent_guides_guide_size = 2
 " }}}
