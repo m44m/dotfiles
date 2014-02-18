@@ -1,0 +1,16 @@
+{
+  "node": true,
+  "expr": true,
+  "lastsemic": true,
+  "undef": true,
+  "unused": true,
+  "globals": {
+    "describe": true,
+    "before": true,
+    "after": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "it": true,
+    "done": true
+  }
+}
