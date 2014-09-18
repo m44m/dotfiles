@@ -598,8 +598,3 @@ let g:syntastic_mode_map = {
   nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
 " }}}
 
-" outlook.vim {{{
-   NeoBundle 'vim-scripts/OutlookVim.git'
-   let g:outlook_always_use_unicode = 1
-" }}}
-"
