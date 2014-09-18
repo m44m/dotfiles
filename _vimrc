@@ -302,14 +302,14 @@ NeoBundle 'Shougo/neocomplete.vim.git'
 NeoBundle 'Shougo/unite.vim.git'
 NeoBundle 'Shougo/vimfiler.git'
 NeoBundle 'Shougo/vimshell.git'
-NeoBundle 'https://github.com/Shougo/vimproc.git', { 
-  \ 'build' : { 
-    \ 'windows' : 'make -f make_mingw32.mak', 
-    \ 'cygwin'  : 'make -f make_cygwin.mak',
-    \ 'mac'     : 'make -f make_mac.mak',
-    \ 'unix'    : 'make -f make_unix.mak',
-  \ },
-\}
+"NeoBundle 'https://github.com/Shougo/vimproc.git', { 
+"  \ 'build' : { 
+"    \ 'windows' : 'make -f make_mingw32.mak', 
+"    \ 'cygwin'  : 'make -f make_cygwin.mak',
+"    \ 'mac'     : 'make -f make_mac.mak',
+"    \ 'unix'    : 'make -f make_unix.mak',
+"  \ },
+"\}
 NeoBundle 'vim-scripts/Align.git'
 NeoBundle 'glidenote/memolist.vim.git'
 NeoBundle 'kien/ctrlp.vim.git'
