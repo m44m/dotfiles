@@ -19,6 +19,9 @@ set nobackup
 set noswapfile
 " }}}
 
+" Undoファイルの作成先
+set undodir=~/.vim/undo
+
 " encoding設定 {{{
 set   encoding=utf-8
 
@@ -43,6 +46,9 @@ if has('iconv')
   unlet s:enc_euc
   unlet s:enc_jis
 endif
+
+" utf-8優先簡易版
+let &fileencodings=substitute(substitute(&fileencodings, ',\?utf-8', '', 'g'), 'cp932', 'utf-8,cp932', '')
 
 if has('win32unix')
   set   termencoding=cp932
@@ -592,3 +598,8 @@ let g:syntastic_mode_map = {
   nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
 " }}}
 
+" outlook.vim {{{
+   NeoBundle 'vim-scripts/OutlookVim.git'
+   let g:outlook_always_use_unicode = 1
+" }}}
+"
