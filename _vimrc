@@ -19,6 +19,9 @@ set nobackup
 set noswapfile
 " }}}
 
+" Undoファイルの作成先
+set undodir=~/.vim/undo
+
 " encoding設定 {{{
 set   encoding=utf-8
 
@@ -43,6 +46,9 @@ if has('iconv')
   unlet s:enc_euc
   unlet s:enc_jis
 endif
+
+" utf-8優先簡易版
+let &fileencodings=substitute(substitute(&fileencodings, ',\?utf-8', '', 'g'), 'cp932', 'utf-8,cp932', '')
 
 if has('win32unix')
   set   termencoding=cp932
@@ -103,6 +109,7 @@ gui
 "colorscheme hybrid
 
 autocmd ColorScheme * highlight Comment guifg=#9C9884
+autocmd ColorScheme * highlight Search guifg=#000000 guibg=#FD971F
 colorscheme molokai
 
 "syntax enable
@@ -162,15 +169,12 @@ autocmd QuickFixCmdPost vimgrep cw
 " }}}
 
 " 折り畳み {{{
- :let g:xml_syntax_folding = 1
- :set foldmethod=syntax
+:let g:xml_syntax_folding = 1
+autocmd FileType xml setlocal foldlevel=1
+:set foldmethod=syntax
 " }}}
 
-"-----------------------------
-" キーマッピング
-"-----------------------------
-" {{{
-
+"<<キーマッピング>> {{{
 " 行頭行末の左右移動で行をまたぐ
 "set nocompatible
 "set whichwrap=b,s,h,l,<,>,[,]  
@@ -207,6 +211,9 @@ noremap  <Home> ^
 " noremap  <Home><Home> 0
 inoremap <Home> <Esc>^i
 
+" Esc 2回でハイライト消去
+nmap <ESC><ESC> :noh<CR><ESC>
+
 " ESCキーをウィンドウズ
 "nmap <Esc> <C-w>
 
@@ -234,21 +241,14 @@ endfunction
 
 "}}}
 
-"-----------------------------
-" Syntax
-"-----------------------------
-" {{{
+" <<Syntax>> {{{
 
 " log4js
 autocmd BufRead,BufNewFile *.log set syntax=log4j
 
 " }}}
 
-
-
-"-----------------------------
-" プラグイン設定
-"-----------------------------
+" <<プラグイン設定>>
 " netrw.vim {{{
 " netrwは常にtree view
 let g:netrw_liststyle = 3
@@ -315,16 +315,21 @@ NeoBundle 'glidenote/memolist.vim.git'
 NeoBundle 'kien/ctrlp.vim.git'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'mattn/emmet-vim'
-"NeoBundle 'thinca/vim-singleton'
+NeoBundle 'thinca/vim-singleton'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'scrooloose/nerdtree.git'
 NeoBundle 'nathanaelkane/vim-indent-guides.git'
+NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'LeafCage/yankround.vim'
+
+NeoBundle 'Markdown'
+NeoBundle 'suan/vim-instant-markdown'
 
 
 " JavaScript
-NeoBundle 'teramako/jscomplete-vim.git'
+" NeoBundle 'teramako/jscomplete-vim.git'
 NeoBundle 'scrooloose/syntastic.git'
 NeoBundle 'felixge/vim-nodejs-errorformat'
 "NeoBundle 'JavaScript-syntax'
@@ -473,6 +478,7 @@ if has('conceal')
 endif
 
 let g:neosnippet#snippets_directory = '~/.vim/snippets'
+let g:neosnippet#disable_runtime_snippets = {"_": 1,}
 "neosnippet }}} ----------
 
 " unite.vim {{{
@@ -542,13 +548,13 @@ endif
 " }}}
 
 " jscomplete-vim {{{
-autocmd FileType javascript
-  \ :setl omnifunc=jscomplete#CompleteJS
-"let g:neobundle_souce_rank = {
-"  \ 'jscomplete' : 500,
-"  \}
-" DOMとMozilla関連とES6のメソッドを補完
-let g:jscomplete_use = ['dom', 'moz', 'es6th']
+"autocmd FileType javascript
+"  \ :setl omnifunc=jscomplete#CompleteJS
+""let g:neobundle_souce_rank = {
+""  \ 'jscomplete' : 500,
+""  \}
+"" DOMとMozilla関連とES6のメソッドを補完
+"let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " }}}
 
 " syntastic {{{
@@ -567,3 +573,33 @@ let g:syntastic_mode_map = {
  let g:indent_guides_color_change_percent = 5
  let g:indent_guides_guide_size = 2
 " }}}
+
+" vim-over {{{
+  nnoremap <silent> <Leader>m :OverCommandLine<CR>
+
+  " カーソル下の単語をハイライト付きで置換
+  nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+
+  " コピーした文字列をハイライト付きで置換
+  nnoremap subp :OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '//!', 'g')<CR>!!gI<Left><Left><Left>
+" }}}
+
+" yankround.vim {{{
+  " キーマップ
+  nmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
+  nmap <C-n> <Plug>(yankround-prev)
+  nmap <C-p> <Plug>(yankround-next)
+
+  "履歴取得数
+  let g:yankround_max_history = 50
+
+  "履歴一覧(kien/ctrp.vim)
+  nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
+" }}}
+
+" outlook.vim {{{
+   NeoBundle 'vim-scripts/OutlookVim.git'
+   let g:outlook_always_use_unicode = 1
+" }}}
+"
