@@ -1,5 +1,8 @@
 {
+  "browser": true,
+  "devel": true,
   "node": true,
+  "jquery": true,
   "expr": true,
   "lastsemic": true,
   "undef": true,
@@ -11,6 +14,7 @@
     "beforeEach": true,
     "afterEach": true,
     "it": true,
-    "done": true
+    "done": true,
+    "_": true
   }
 }
