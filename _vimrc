@@ -8,6 +8,12 @@ if expand("%") == ''
 endif
 " }}}
 
+" cdpath {{{
+" 環境変数CDPATHを設定しておく
+"let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
+let &cdpath = ',' . substitute(substitute($CDPATH, '\\', '/', 'g'), ';', ',', 'g')
+" }}}
+
 " バックアップファイルを作成しない {{{
 set nowritebackup
 set nobackup
@@ -323,9 +329,7 @@ NeoBundle 'scrooloose/nerdtree.git'
 NeoBundle 'nathanaelkane/vim-indent-guides.git'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'LeafCage/yankround.vim'
-
-NeoBundle 'Markdown'
-NeoBundle 'suan/vim-instant-markdown'
+NeoBundle 'PProvost/vim-ps1.git'
 
 
 " JavaScript
