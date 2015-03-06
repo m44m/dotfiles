@@ -297,8 +297,15 @@ set nocompatible
 filetype off
 
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim
-  call neobundle#rc(expand('~/.vim/bundle'))
+  set runtimepath+=~/.vim/bundle/neobundle.vim,~/vimfiles/bundle/neobundle.vim
+  if has('win32') || has('win64')
+    let s:bundlepath = '~/vimfiles/bundle'
+  else
+    let s:bundlepath = '~/.vim/bundle'
+  endif
+  call neobundle#begin(expand(s:bundlepath))
+  NeoBundleFetch 'Shougo/neobundle.vim'
+  call neobundle#end()
 endif
 
 let g:neobundle_default_git_protocol='https'
