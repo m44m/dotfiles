@@ -1,6 +1,7 @@
 {
   "libs": [
     "ecma5",
+    "jquery",
     "underscore"
   ]
 }
