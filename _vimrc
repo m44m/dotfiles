@@ -1,6 +1,8 @@
 " vim:set foldmethod=marker:
-
 scriptencoding utf8
+
+" vimフォルダの場所
+let s:vimfiles = has('win32') ? '~/vimfiles' : '~/.vim'
 
 " 起動時のパスをホームディレクトリに設定 {{{
 if expand("%") == ''
@@ -20,13 +22,13 @@ set nobackup
 " }}}
 
 " スワップファイルの作成先 => 作成しない {{{
-" set directory=~/.vim/swap
+" set directory=~/.vim/undo,~/vimfiles/undo
 " 作成しない
 set noswapfile
 " }}}
 
 " Undoファイルの作成先
-set undodir=~/.vim/undo
+set undodir=~/.vim/undo,~/vimfiles/undo
 
 " encoding設定 {{{
 set   encoding=utf-8
@@ -298,11 +300,7 @@ filetype off
 
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim,~/vimfiles/bundle/neobundle.vim
-  if has('win32') || has('win64')
-    let s:bundlepath = '~/vimfiles/bundle'
-  else
-    let s:bundlepath = '~/.vim/bundle'
-  endif
+  let s:bundlepath = s:vimfiles . '/bundle'
   call neobundle#begin(expand(s:bundlepath))
   NeoBundleFetch 'Shougo/neobundle.vim'
   call neobundle#end()
@@ -337,6 +335,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides.git'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'PProvost/vim-ps1.git'
+NeoBundle 'digitaltoad/vim-jade'
 
 
 " JavaScript
@@ -361,15 +360,16 @@ NeoBundleLazy 'nosami/Omnisharp', {
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
 " tern for vim
-"if has('python') && executable('npm')
-"  NeoBundleLazy 'marijnh/tern_for_vim', {
-"        \ 'build' : 'npm install',
-"        \ 'autoload' : {
-"        \   'functions': ['tern#Complete', 'tern#Enable'],
-"        \   'filetypes' : 'javascript'
-"        \ }}
-"endif
-"NeoBundle 'marijnh/tern_for_vim'
+if (has('python') || has('python3')) && executable('npm')
+  NeoBundleLazy 'marijnh/tern_for_vim', {
+        \ 'build' : {
+        \   'others': 'npm install'
+        \ },
+        \ 'autoload' : {
+        \   'functions': ['tern#Complete', 'tern#Enable'],
+        \   'filetypes' : 'javascript'
+        \ }}
+endif
 
 "colorscheme
 NeoBundle 'w0ng/vim-hybrid'
@@ -488,7 +488,7 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-let g:neosnippet#snippets_directory = '~/.vim/snippets'
+let g:neosnippet#snippets_directory = s:vimfiles . '/snippets'
 let g:neosnippet#disable_runtime_snippets = {"_": 1,}
 "neosnippet }}} ----------
 
