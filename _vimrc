@@ -313,14 +313,14 @@ NeoBundle 'Shougo/neocomplete.vim.git'
 NeoBundle 'Shougo/unite.vim.git'
 NeoBundle 'Shougo/vimfiler.git'
 NeoBundle 'Shougo/vimshell.git'
-"NeoBundle 'https://github.com/Shougo/vimproc.git', { 
-"  \ 'build' : { 
-"    \ 'windows' : 'make -f make_mingw32.mak', 
-"    \ 'cygwin'  : 'make -f make_cygwin.mak',
-"    \ 'mac'     : 'make -f make_mac.mak',
-"    \ 'unix'    : 'make -f make_unix.mak',
-"  \ },
-"\}
+NeoBundle 'https://github.com/Shougo/vimproc.git', { 
+  \ 'build' : { 
+    \ 'windows' : 'mingw32-make -f make_mingw64.mak', 
+    \ 'cygwin'  : 'make -f make_cygwin.mak',
+    \ 'mac'     : 'make -f make_mac.mak',
+    \ 'unix'    : 'make -f make_unix.mak',
+  \ },
+\}
 NeoBundle 'vim-scripts/Align.git'
 NeoBundle 'glidenote/memolist.vim.git'
 NeoBundle 'kien/ctrlp.vim.git'
@@ -339,7 +339,7 @@ NeoBundle 'digitaltoad/vim-jade'
 
 
 " JavaScript
-" NeoBundle 'teramako/jscomplete-vim.git'
+NeoBundle 'teramako/jscomplete-vim.git'
 NeoBundle 'scrooloose/syntastic.git'
 NeoBundle 'felixge/vim-nodejs-errorformat'
 "NeoBundle 'JavaScript-syntax'
@@ -360,16 +360,16 @@ NeoBundleLazy 'nosami/Omnisharp', {
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
 " tern for vim
-if (has('python') || has('python3')) && executable('npm')
-  NeoBundleLazy 'marijnh/tern_for_vim', {
-        \ 'build' : {
-        \   'others': 'npm install'
-        \ },
-        \ 'autoload' : {
-        \   'functions': ['tern#Complete', 'tern#Enable'],
-        \   'filetypes' : 'javascript'
-        \ }}
-endif
+" if (has('python') || has('python3')) && executable('npm')
+"   NeoBundleLazy 'marijnh/tern_for_vim', {
+"         \ 'build' : {
+"         \   'others': 'npm install'
+"         \ },
+"         \ 'autoload' : {
+"         \   'functions': ['tern#Complete', 'tern#Enable'],
+"         \   'filetypes' : 'javascript'
+"         \ }}
+" endif
 
 "colorscheme
 NeoBundle 'w0ng/vim-hybrid'
@@ -559,13 +559,13 @@ endif
 " }}}
 
 " jscomplete-vim {{{
-"autocmd FileType javascript
-"  \ :setl omnifunc=jscomplete#CompleteJS
-""let g:neobundle_souce_rank = {
-""  \ 'jscomplete' : 500,
-""  \}
-"" DOMとMozilla関連とES6のメソッドを補完
-"let g:jscomplete_use = ['dom', 'moz', 'es6th']
+autocmd FileType javascript
+  \ :setl omnifunc=jscomplete#CompleteJS
+let g:neobundle_souce_rank = {
+  \ 'jscomplete' : 500,
+  \}
+" DOMとMozilla関連とES6のメソッドを補完
+let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " }}}
 
 " syntastic {{{
