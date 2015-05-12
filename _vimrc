@@ -338,25 +338,16 @@ NeoBundle 'PProvost/vim-ps1.git'
 NeoBundle 'digitaltoad/vim-jade'
 
 
-" JavaScript
-NeoBundle 'teramako/jscomplete-vim.git'
-NeoBundle 'scrooloose/syntastic.git'
+" JavaScript {{{
 NeoBundle 'felixge/vim-nodejs-errorformat'
+NeoBundle 'moll/vim-node'
+NeoBundle 'myhere/vim-nodejs-complete'
+NeoBundle 'guileen/vim-node-dict'
+au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
+
 "NeoBundle 'JavaScript-syntax'
 "NeoBundle 'pangloss/vim-javascript'
 "NeoBundle 'vim-scripts/JavaScript-Indent'
-
-"Omnisharp
-NeoBundleLazy 'nosami/Omnisharp', {
-\   'autoload': {'filetypes': ['cs']},
-\   'build': {
-\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
-\     'mac': 'xbuild server/OmniSharp.sln',
-\     'unix': 'xbuild server/OmniSharp.sln',
-\   }
-\ }
-
-" vim-javascript-syntax
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
 " tern for vim
@@ -371,10 +362,42 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascr
 "         \ }}
 " endif
 
+" jscomplete-vim {{{
+"NeoBundle 'teramako/jscomplete-vim.git'
+NeoBundle 'mattn/jscomplete-vim'
+autocmd FileType javascript :setl omnifunc=jscomplete#CompleteJS
+let g:neobundle_souce_rank = {
+  \ 'jscomplete' : 500,
+  \}
+" DOMとMozilla関連とES6のメソッドを補完
+let g:jscomplete_use = ['dom', 'moz', 'es6th']
+" }}}
+
+" syntastic {{{
+NeoBundle 'scrooloose/syntastic.git'
+let g:syntastic_javascript_checkers = ["jshint"]
+"let g:syntastic_javascript_jshint_conf = "~/_jshintrc"
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'active_filetypes': ['ruby', 'javascript'],
+      \ 'passive_filetypes': []
+      \ }
+" }}}
+"}}}
+
+
+"Omnisharp
+NeoBundleLazy 'nosami/Omnisharp', {
+\   'autoload': {'filetypes': ['cs']},
+\   'build': {
+\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
+\     'mac': 'xbuild server/OmniSharp.sln',
+\     'unix': 'xbuild server/OmniSharp.sln',
+\   }
+\ }
+
 "colorscheme
 NeoBundle 'w0ng/vim-hybrid'
-
-
 
 filetype plugin on
 filetype indent on
@@ -558,25 +581,6 @@ endif
 " -> Windwos(7 x64)でgjslintが動かなかった...
 " }}}
 
-" jscomplete-vim {{{
-autocmd FileType javascript
-  \ :setl omnifunc=jscomplete#CompleteJS
-let g:neobundle_souce_rank = {
-  \ 'jscomplete' : 500,
-  \}
-" DOMとMozilla関連とES6のメソッドを補完
-let g:jscomplete_use = ['dom', 'moz', 'es6th']
-" }}}
-
-" syntastic {{{
-let g:syntastic_javascript_checkers = ["jshint"]
-"let g:syntastic_javascript_jshint_conf = "~/_jshintrc"
-let g:syntastic_mode_map = {
-      \ 'mode': 'active',
-      \ 'active_filetypes': ['ruby', 'javascript'],
-      \ 'passive_filetypes': []
-      \ }
-" }}}
 
 " vim-indent-guides {{{
  let g:indent_guides_start_level = 2
