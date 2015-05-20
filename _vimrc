@@ -309,6 +309,7 @@ endif
 let g:neobundle_default_git_protocol='https'
 
 NeoBundle 'Shougo/neosnippet.git'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/neocomplete.vim.git'
 NeoBundle 'Shougo/unite.vim.git'
 NeoBundle 'Shougo/vimfiler.git'
@@ -339,11 +340,11 @@ NeoBundle 'digitaltoad/vim-jade'
 
 
 " JavaScript {{{
-NeoBundle 'felixge/vim-nodejs-errorformat'
-NeoBundle 'moll/vim-node'
-NeoBundle 'myhere/vim-nodejs-complete'
-NeoBundle 'guileen/vim-node-dict'
-au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
+"NeoBundle 'felixge/vim-nodejs-errorformat'
+"NeoBundle 'moll/vim-node'
+"NeoBundle 'myhere/vim-nodejs-complete'
+"NeoBundle 'guileen/vim-node-dict'
+"au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
 
 "NeoBundle 'JavaScript-syntax'
 "NeoBundle 'pangloss/vim-javascript'
@@ -351,27 +352,22 @@ au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dic
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
 " tern for vim
-" if (has('python') || has('python3')) && executable('npm')
-"   NeoBundleLazy 'marijnh/tern_for_vim', {
-"         \ 'build' : {
-"         \   'others': 'npm install'
-"         \ },
-"         \ 'autoload' : {
-"         \   'functions': ['tern#Complete', 'tern#Enable'],
-"         \   'filetypes' : 'javascript'
-"         \ }}
-" endif
+ if (has('python') || has('python3')) && executable('npm')
+   NeoBundle 'marijnh/tern_for_vim', {
+         \ 'build' : {
+         \   'others': 'npm install'
+         \ }}
+ endif
 
-" jscomplete-vim {{{
-"NeoBundle 'teramako/jscomplete-vim.git'
-NeoBundle 'mattn/jscomplete-vim'
-autocmd FileType javascript :setl omnifunc=jscomplete#CompleteJS
-let g:neobundle_souce_rank = {
-  \ 'jscomplete' : 500,
-  \}
-" DOMとMozilla関連とES6のメソッドを補完
-let g:jscomplete_use = ['dom', 'moz', 'es6th']
-" }}}
+"" jscomplete-vim {{{
+"NeoBundle 'mattn/jscomplete-vim'
+"autocmd FileType javascript :setl omnifunc=jscomplete#CompleteJS
+"let g:neobundle_souce_rank = {
+"  \ 'jscomplete' : 500,
+"  \}
+"" DOMとMozilla関連とES6のメソッドを補完
+"let g:jscomplete_use = ['dom', 'moz', 'es6th']
+"" }}}
 
 " syntastic {{{
 NeoBundle 'scrooloose/syntastic.git'
@@ -383,6 +379,17 @@ let g:syntastic_mode_map = {
       \ 'passive_filetypes': []
       \ }
 " }}}
+
+" Closure Linter {{{
+" refer to:
+" http://www.curiosity-drives.me/2012/01/vimjavascript.html
+" #文法チェック
+"autocmd FileType javascript :compiler gjslint
+"autocmd QuickfixCmdPost make copen
+" -> Windwos(7 x64)でgjslintが動かなかった...
+" }}}
+
+
 "}}}
 
 
@@ -511,8 +518,8 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-let g:neosnippet#snippets_directory = s:vimfiles . '/snippets'
-let g:neosnippet#disable_runtime_snippets = {"_": 1,}
+"let g:neosnippet#snippets_directory = s:vimfiles . '/snippets'
+"let g:neosnippet#disable_runtime_snippets = {"_": 1,}
 "neosnippet }}} ----------
 
 " unite.vim {{{
@@ -571,16 +578,6 @@ if has('clientserver')
     call singleton#enable()
 endif
 " }}}
-
-" Closure Linter {{{
-" refer to:
-" http://www.curiosity-drives.me/2012/01/vimjavascript.html
-" #文法チェック
-"autocmd FileType javascript :compiler gjslint
-"autocmd QuickfixCmdPost make copen
-" -> Windwos(7 x64)でgjslintが動かなかった...
-" }}}
-
 
 " vim-indent-guides {{{
  let g:indent_guides_start_level = 2
