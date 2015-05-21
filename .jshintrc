@@ -3,6 +3,7 @@
   "devel": true,
   "node": true,
   "jquery": true,
+  "dojo": true,  //for requirejs
   "expr": true,
   "lastsemic": true,
   "undef": true,
