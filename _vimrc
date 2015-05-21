@@ -299,119 +299,45 @@ set nocompatible
 filetype off
 
 if has('vim_starting')
+  if &compatible
+    set nocompatible
+  endif
+
   set runtimepath+=~/.vim/bundle/neobundle.vim,~/vimfiles/bundle/neobundle.vim
-  let s:bundlepath = s:vimfiles . '/bundle'
-  call neobundle#begin(expand(s:bundlepath))
-  NeoBundleFetch 'Shougo/neobundle.vim'
-  call neobundle#end()
 endif
+
+let s:bundlepath = s:vimfiles . '/bundle'
+call neobundle#begin(expand(s:bundlepath))
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 let g:neobundle_default_git_protocol='https'
 
 NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'Shougo/neosnippet-snippets'
+"neosnippet {{{ ----------
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
+"
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+ \: pumvisible() ? "\<C-k>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+ \ "\<Plug>(neosnippet_expand_or_jump)"
+ \: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+"let g:neosnippet#snippets_directory = s:vimfiles . '/snippets'
+"let g:neosnippet#disable_runtime_snippets = {"_": 1,}
+"neosnippet }}} ----------
 NeoBundle 'Shougo/neocomplete.vim.git'
-NeoBundle 'Shougo/unite.vim.git'
-NeoBundle 'Shougo/vimfiler.git'
-NeoBundle 'Shougo/vimshell.git'
-NeoBundle 'https://github.com/Shougo/vimproc.git', { 
-  \ 'build' : { 
-    \ 'windows' : 'mingw32-make -f make_mingw64.mak', 
-    \ 'cygwin'  : 'make -f make_cygwin.mak',
-    \ 'mac'     : 'make -f make_mac.mak',
-    \ 'unix'    : 'make -f make_unix.mak',
-  \ },
-\}
-NeoBundle 'vim-scripts/Align.git'
-NeoBundle 'glidenote/memolist.vim.git'
-NeoBundle 'kien/ctrlp.vim.git'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'thinca/vim-singleton'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'ujihisa/vimshell-ssh'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'scrooloose/nerdtree.git'
-NeoBundle 'nathanaelkane/vim-indent-guides.git'
-NeoBundle 'osyo-manga/vim-over'
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 'PProvost/vim-ps1.git'
-NeoBundle 'digitaltoad/vim-jade'
-
-
-" JavaScript {{{
-"NeoBundle 'felixge/vim-nodejs-errorformat'
-"NeoBundle 'moll/vim-node'
-"NeoBundle 'myhere/vim-nodejs-complete'
-"NeoBundle 'guileen/vim-node-dict'
-"au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
-
-"NeoBundle 'JavaScript-syntax'
-"NeoBundle 'pangloss/vim-javascript'
-"NeoBundle 'vim-scripts/JavaScript-Indent'
-NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-
-" tern for vim
- if (has('python') || has('python3')) && executable('npm')
-   NeoBundle 'marijnh/tern_for_vim', {
-         \ 'build' : {
-         \   'others': 'npm install'
-         \ }}
- endif
-
-"" jscomplete-vim {{{
-"NeoBundle 'mattn/jscomplete-vim'
-"autocmd FileType javascript :setl omnifunc=jscomplete#CompleteJS
-"let g:neobundle_souce_rank = {
-"  \ 'jscomplete' : 500,
-"  \}
-"" DOMとMozilla関連とES6のメソッドを補完
-"let g:jscomplete_use = ['dom', 'moz', 'es6th']
-"" }}}
-
-" syntastic {{{
-NeoBundle 'scrooloose/syntastic.git'
-let g:syntastic_javascript_checkers = ["jshint"]
-"let g:syntastic_javascript_jshint_conf = "~/_jshintrc"
-let g:syntastic_mode_map = {
-      \ 'mode': 'active',
-      \ 'active_filetypes': ['ruby', 'javascript'],
-      \ 'passive_filetypes': []
-      \ }
-" }}}
-
-" Closure Linter {{{
-" refer to:
-" http://www.curiosity-drives.me/2012/01/vimjavascript.html
-" #文法チェック
-"autocmd FileType javascript :compiler gjslint
-"autocmd QuickfixCmdPost make copen
-" -> Windwos(7 x64)でgjslintが動かなかった...
-" }}}
-
-
-"}}}
-
-
-"Omnisharp
-NeoBundleLazy 'nosami/Omnisharp', {
-\   'autoload': {'filetypes': ['cs']},
-\   'build': {
-\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
-\     'mac': 'xbuild server/OmniSharp.sln',
-\     'unix': 'xbuild server/OmniSharp.sln',
-\   }
-\ }
-
-"colorscheme
-NeoBundle 'w0ng/vim-hybrid'
-
-filetype plugin on
-filetype indent on
-
-NeoBundleCheck
-" }}}
-
 "neocomplete.vim {{{ ----------
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
@@ -496,32 +422,9 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
+let g:neocomplete#sources#omni#input_patterns.javascript = '[^. \t]\.\w*'
 "neocomplete.vim }}} ----------
-
-"neosnippet {{{ ----------
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
-"
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
- \: pumvisible() ? "\<C-k>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
- \ "\<Plug>(neosnippet_expand_or_jump)"
- \: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-"let g:neosnippet#snippets_directory = s:vimfiles . '/snippets'
-"let g:neosnippet#disable_runtime_snippets = {"_": 1,}
-"neosnippet }}} ----------
-
+NeoBundle 'Shougo/unite.vim.git'
 " unite.vim {{{
 nnoremap [unite] <nop>
 nmap     <Leader>f [unite]
@@ -533,7 +436,6 @@ nnoremap <silent> [unite]m :<C-u>Unite<Space>file_mru<CR>
 nnoremap <silent> [unite]r :<C-u>UniteWithBufferDir<CR>
 nnoremap <silent> ,vr :UniteResume<CR>
 " }}}
-
 " unite-build map {{{
 nnoremap <silent> ,vb :Unite build<CR>
 nnoremap <silent> ,vcb :Unite build:!<CR>
@@ -549,53 +451,56 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 " }}}
-
+NeoBundle 'Shougo/vimfiler.git'
 " vimfiler.vim {{{
 " IDE風に起動
 command! Ide :VimFiler -split -simple -winwidth=50 -no-quit
 " }}}
-
-" vinarise {{{
-let g:vinarise_enable_auto_detect = 1
-" }}}
-
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'https://github.com/Shougo/vimproc.git', { 
+  \ 'build' : { 
+    \ 'windows' : 'mingw32-make -f make_mingw64.mak', 
+    \ 'cygwin'  : 'make -f make_cygwin.mak',
+    \ 'mac'     : 'make -f make_mac.mak',
+    \ 'unix'    : 'make -f make_unix.mak',
+  \ },
+\}
+NeoBundle 'vim-scripts/Align.git'
+NeoBundle 'glidenote/memolist.vim.git'
+NeoBundle 'kien/ctrlp.vim.git'
 " ctrlp {{{
 let g:ctrlp_use_migemo = 1
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 " }}}
-
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'mattn/emmet-vim'
 "emmet-vim {{{
 let g:user_emmet_expandabbr_key = '<c-e>'
 let g:use_emmet_complete_tag = 1
 " }}}
-
-"vim-singleton {{{
-" すでにインスタンスがある場合はそっちで開く
-if has('clientserver')
-    NeoBundle 'thinca/vim-singleton'
-    call singleton#enable()
-endif
-" }}}
-
+NeoBundle 'thinca/vim-singleton'
+NeoBundle 'tpope/vim-surround'
+"NeoBundle 'ujihisa/vimshell-ssh'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'scrooloose/nerdtree.git'
+NeoBundle 'nathanaelkane/vim-indent-guides.git'
 " vim-indent-guides {{{
  let g:indent_guides_start_level = 2
  let g:indent_guides_enable_on_vim_startup = 1
  let g:indent_guides_color_change_percent = 5
  let g:indent_guides_guide_size = 2
 " }}}
-
+NeoBundle 'osyo-manga/vim-over'
 " vim-over {{{
   nnoremap <silent> <Leader>m :OverCommandLine<CR>
-
   " カーソル下の単語をハイライト付きで置換
   nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
-
   " コピーした文字列をハイライト付きで置換
   nnoremap subp :OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '//!', 'g')<CR>!!gI<Left><Left><Left>
 " }}}
-
+NeoBundle 'LeafCage/yankround.vim'
 " yankround.vim {{{
   " キーマップ
   nmap p <Plug>(yankround-p)
@@ -609,4 +514,84 @@ endif
   "履歴一覧(kien/ctrp.vim)
   nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
 " }}}
+NeoBundle 'PProvost/vim-ps1.git'
 
+" JavaScript {{{
+"NeoBundle 'felixge/vim-nodejs-errorformat'
+"NeoBundle 'moll/vim-node'
+"NeoBundle 'myhere/vim-nodejs-complete'
+"NeoBundle 'guileen/vim-node-dict'
+"au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
+
+"NeoBundle 'JavaScript-syntax'
+"NeoBundle 'pangloss/vim-javascript'
+"NeoBundle 'vim-scripts/JavaScript-Indent'
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'digitaltoad/vim-jade'
+
+" tern for vim
+if (has('python') || has('python3')) && executable('npm')
+  NeoBundle 'marijnh/tern_for_vim', {
+        \ 'build' : {
+        \   'others': 'npm install'
+        \ }}
+endif
+
+"" jscomplete-vim {{{
+"NeoBundle 'mattn/jscomplete-vim'
+"autocmd FileType javascript :setl omnifunc=jscomplete#CompleteJS
+""let g:neobundle_souce_rank = {
+""  \ 'jscomplete' : 500,
+""  \}
+"" DOMとMozilla関連とES6のメソッドを補完
+""let g:jscomplete_use = ['dom', 'moz', 'es6th']
+"let g:jscomplete_use = ['dom', 'moz']
+" }}}
+
+" syntastic {{{
+NeoBundle 'scrooloose/syntastic.git'
+let g:syntastic_javascript_checkers = ["jshint"]
+"let g:syntastic_javascript_jshint_conf = "~/_jshintrc"
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'active_filetypes': ['ruby', 'javascript'],
+      \ 'passive_filetypes': []
+      \ }
+" }}}
+
+" Closure Linter {{{
+" refer to:
+" http://www.curiosity-drives.me/2012/01/vimjavascript.html
+" #文法チェック
+"autocmd FileType javascript :compiler gjslint
+"autocmd QuickfixCmdPost make copen
+" -> Windwos(7 x64)でgjslintが動かなかった...
+" }}}
+
+"}}}
+
+"Omnisharp
+NeoBundleLazy 'nosami/Omnisharp', {
+\   'autoload': {'filetypes': ['cs']},
+\   'build': {
+\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
+\     'mac': 'xbuild server/OmniSharp.sln',
+\     'unix': 'xbuild server/OmniSharp.sln',
+\   }
+\ }
+
+"colorscheme
+NeoBundle 'w0ng/vim-hybrid'
+
+call neobundle#end()
+filetype plugin indent on
+
+NeoBundleCheck
+" }}}
+
+"vim-singleton {{{
+" すでにインスタンスがある場合はそっちで開く
+if has('clientserver')
+  call singleton#enable()
+endif
+" }}}
