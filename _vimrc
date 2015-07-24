@@ -183,6 +183,11 @@ autocmd FileType xml setlocal foldlevel=1
 " }}}
 
 "<<キーマッピング>> {{{
+
+" LeaderをSpaceに変更
+let mapleader = "\<Space>"
+
+
 " 行頭行末の左右移動で行をまたぐ
 "set nocompatible
 "set whichwrap=b,s,h,l,<,>,[,]  
