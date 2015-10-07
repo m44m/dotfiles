@@ -33,7 +33,7 @@ set undodir=~/.vim/undo,~/vimfiles/undo
 " encoding設定 {{{
 set   encoding=utf-8
 
-if has('win32') && has('kaoriya')
+if has('win32') && has('kaoriya') && has('gui')
   set   ambiwidth=auto
 else
   set   ambiwidth=double
@@ -58,15 +58,12 @@ endif
 " utf-8優先簡易版
 let &fileencodings=substitute(substitute(&fileencodings, ',\?utf-8', '', 'g'), 'cp932', 'utf-8,cp932', '')
 
-if has('win32unix')
+if has('win32unix') || has('win32') || has('win64')
   set   termencoding=cp932
 elseif !has('macunix')
-  set   termencoding=euc-jp
+  set   termencoding=
 endif
 " }}}
-
-" Color Scheme (Vim用)
-colorscheme molokai
 
 " 行番号表示
 set number
@@ -105,7 +102,9 @@ set listchars=tab:^\ ,trail:~,extends:\
 "endif
 "}}}
 
-gui
+if has('gui')
+  gui
+endif
 " 透過表示設定 {{{
 "set transparency=225
 "set transparency=200
@@ -118,11 +117,11 @@ gui
 
 autocmd ColorScheme * highlight Comment guifg=#9C9884
 autocmd ColorScheme * highlight Search guifg=#000000 guibg=#FD971F
-colorscheme molokai
+"colorscheme molokai
 
 "syntax enable
-"set background=dark
-"colorscheme solarized
+set background=dark
+colorscheme solarized
 " }}}
 
 " ステータスライン設定 {{{
@@ -238,7 +237,7 @@ noremap! <Leader>tstamp <C-R>=strftime('%Y%m%d%H%M')<CR>
 noremap! <Leader>dstamp <C-R>=strftime('%Y%m%d')<CR>
 
 "圧縮
-command! Zip :! 7z.exe a -p %:r.zip %
+command! Zip :! 7za.exe a -p %:r.zip %
 
 "ファイルフォーマットの変換
 command! Conv2utf8 set fileencoding=utf-8
@@ -425,6 +424,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.javascript = '[^. \t]\.\w*'
 "neocomplete.vim }}} ----------
 NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/neomru.vim'
 " unite.vim {{{
 nnoremap [unite] <nop>
 nmap     <Leader>f [unite]
@@ -477,7 +477,7 @@ let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで�
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'mattn/emmet-vim'
 "emmet-vim {{{
-let g:user_emmet_expandabbr_key = '<c-e>'
+let g:user_emmet_expandabbr_key = '<c-k>'
 let g:use_emmet_complete_tag = 1
 " }}}
 NeoBundle 'thinca/vim-singleton'

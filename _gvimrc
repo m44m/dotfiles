@@ -54,7 +54,7 @@ elseif has('win32') || has('win64')
 "   set guifont=Migu\ 1m:h11:cDEFAULT  guifontwide=Migu\ 1m:h11:cDEFAULT
 "   set guifont=Rounded\ Mgen\+\ 2m\ regular:h11:cDEFAULT  guifontwide=Rounded\ Mgen\+\ 2m\ regular:h11:cDEFAULT
 "   set guifont=Rounded\ Mgen\+\ 1mn\ regular:h11:cDEFAULT  guifontwide=Rounded\ Mgen\+\ 1mn\ regular:h11:cDEFAULT
-   set guifont=Myrica\ M:h13:cDEFAULT  guifontwide=Myrica\ M:h13:cDEFAULT
+   set guifont=Myrica\ M:h12:cDEFAULT  guifontwide=Myrica\ M:h12:cDEFAULT
 "   set guifont=M+\ 1mn\ regular:h10:w6:cDEFAULT guifontwide=M+\ 1mn\ regular:h10:w6:cDEFAULT
 "   set guifont=Ricty\ Diminished:h12:cDEFAULT guifontwide=Ricty\ Diminished:h12:cDEFAULT
 "   set guifont=Ricty\ Diminished\ Discord:h12:cDEFAULT guifontwide=Ricty\ Diminished\ Discord:h12:cDEFAULT
