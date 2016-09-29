@@ -84,6 +84,16 @@ set backspace=indent,eol,start
 " クリップボード連携
 " set clipboard=unnamed,autoselect
 
+" 選択するとクリップボードにコピー
+"GUI
+set guioptions+=a
+"CUI
+"set clipboard+=autoselect
+
+" 右クリックで貼り付け
+nnoremap <RightMouse> "*p
+inoremap <RightMouse> <C-r><C-o>*
+
 " Tab,行末の半角スペースを明示的に表示
 set list
 set listchars=tab:^\ ,trail:~,extends:\
@@ -184,7 +194,7 @@ autocmd FileType xml setlocal foldlevel=1
 "<<キーマッピング>> {{{
 
 " LeaderをSpaceに変更
-let mapleader = "\<Space>"
+"let mapleader = "\<Space>"
 
 
 " 行頭行末の左右移動で行をまたぐ
