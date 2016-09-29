@@ -1,6 +1,7 @@
 {
   "browser": true,
   "devel": true,
+  "esnext": true,
   "node": true,
   "jquery": true,
   "dojo": true,  //for requirejs
