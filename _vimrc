@@ -125,13 +125,13 @@ endif
 
 "colorscheme hybrid
 
-autocmd ColorScheme * highlight Comment guifg=#9C9884
-autocmd ColorScheme * highlight Search guifg=#000000 guibg=#FD971F
+"autocmd ColorScheme * highlight Comment guifg=#9C9884
+"autocmd ColorScheme * highlight Search guifg=#000000 guibg=#FD971F
 "colorscheme molokai
 
 "syntax enable
-set background=dark
-colorscheme solarized
+"set background=dark
+"colorscheme solarized
 " }}}
 
 " ステータスライン設定 {{{
@@ -328,6 +328,82 @@ let g:neobundle_default_git_protocol='https'
 
 NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'Shougo/neocomplete.vim.git'
+NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/vimfiler.git'
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'https://github.com/Shougo/vimproc.git', { 
+  \ 'build' : { 
+    \ 'windows' : 'mingw32-make -f make_mingw64.mak', 
+    \ 'cygwin'  : 'make -f make_cygwin.mak',
+    \ 'mac'     : 'make -f make_mac.mak',
+    \ 'unix'    : 'make -f make_unix.mak',
+  \ },
+\}
+NeoBundle 'vim-scripts/Align.git'
+NeoBundle 'glidenote/memolist.vim.git'
+NeoBundle 'kien/ctrlp.vim.git'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'thinca/vim-singleton'
+NeoBundle 'tpope/vim-surround'
+"NeoBundle 'ujihisa/vimshell-ssh'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'scrooloose/nerdtree.git'
+NeoBundle 'nathanaelkane/vim-indent-guides.git'
+NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'LeafCage/yankround.vim'
+NeoBundle 'PProvost/vim-ps1.git'
+
+"JavaScript
+"NeoBundle 'felixge/vim-nodejs-errorformat'
+"NeoBundle 'moll/vim-node'
+"NeoBundle 'myhere/vim-nodejs-complete'
+"NeoBundle 'guileen/vim-node-dict'
+"au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
+"NeoBundle 'JavaScript-syntax'
+"NeoBundle 'pangloss/vim-javascript'
+"NeoBundle 'vim-scripts/JavaScript-Indent'
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'digitaltoad/vim-jade'
+" tern for vim
+if (has('python') || has('python3')) && executable('npm')
+  NeoBundle 'marijnh/tern_for_vim', {
+        \ 'build' : {
+        \   'others': 'npm install'
+        \ }}
+endif
+
+NeoBundle 'scrooloose/syntastic.git'
+
+NeoBundleLazy 'davidhalter/jedi-vim', {
+  \ 'autoload': {
+  \   'filetypes': ['python', 'python3', 'djangohtml'],
+  \ },
+  \ 'build': {
+  \   'windows': 'pip install jedi',
+  \   'mac': 'pip install jedi',
+  \   'unix': 'pip install jedi',
+  \ }}
+
+NeoBundleLazy 'nosami/Omnisharp', {
+\   'autoload': {'filetypes': ['cs']},
+\   'build': {
+\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
+\     'mac': 'xbuild server/OmniSharp.sln',
+\     'unix': 'xbuild server/OmniSharp.sln',
+\   }
+\ }
+
+NeoBundle 'w0ng/vim-hybrid'
+
+call neobundle#end()
+filetype plugin indent on
+
+NeoBundleCheck
+" }}}
+
 "neosnippet {{{ ----------
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -351,7 +427,7 @@ endif
 "let g:neosnippet#snippets_directory = s:vimfiles . '/snippets'
 "let g:neosnippet#disable_runtime_snippets = {"_": 1,}
 "neosnippet }}} ----------
-NeoBundle 'Shougo/neocomplete.vim.git'
+
 "neocomplete.vim {{{ ----------
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
@@ -438,8 +514,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 let g:neocomplete#sources#omni#input_patterns.javascript = '[^. \t]\.\w*'
 "neocomplete.vim }}} ----------
-NeoBundle 'Shougo/unite.vim.git'
-NeoBundle 'Shougo/neomru.vim'
+
 " unite.vim {{{
 nnoremap [unite] <nop>
 nmap     <Leader>f [unite]
@@ -466,48 +541,31 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 " }}}
-NeoBundle 'Shougo/vimfiler.git'
+
 " vimfiler.vim {{{
 " IDE風に起動
 command! Ide :VimFiler -split -simple -winwidth=50 -no-quit
 " }}}
-NeoBundle 'Shougo/vimshell.git'
-NeoBundle 'https://github.com/Shougo/vimproc.git', { 
-  \ 'build' : { 
-    \ 'windows' : 'mingw32-make -f make_mingw64.mak', 
-    \ 'cygwin'  : 'make -f make_cygwin.mak',
-    \ 'mac'     : 'make -f make_mac.mak',
-    \ 'unix'    : 'make -f make_unix.mak',
-  \ },
-\}
-NeoBundle 'vim-scripts/Align.git'
-NeoBundle 'glidenote/memolist.vim.git'
-NeoBundle 'kien/ctrlp.vim.git'
+
 " ctrlp {{{
 let g:ctrlp_use_migemo = 1
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 " }}}
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'mattn/emmet-vim'
+
 "emmet-vim {{{
 let g:user_emmet_expandabbr_key = '<c-k>'
 let g:use_emmet_complete_tag = 1
 " }}}
-NeoBundle 'thinca/vim-singleton'
-NeoBundle 'tpope/vim-surround'
-"NeoBundle 'ujihisa/vimshell-ssh'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'scrooloose/nerdtree.git'
-NeoBundle 'nathanaelkane/vim-indent-guides.git'
+
 " vim-indent-guides {{{
  let g:indent_guides_start_level = 2
  let g:indent_guides_enable_on_vim_startup = 1
  let g:indent_guides_color_change_percent = 5
  let g:indent_guides_guide_size = 2
 " }}}
-NeoBundle 'osyo-manga/vim-over'
+
 " vim-over {{{
   nnoremap <silent> <Leader>m :OverCommandLine<CR>
   " カーソル下の単語をハイライト付きで置換
@@ -515,7 +573,7 @@ NeoBundle 'osyo-manga/vim-over'
   " コピーした文字列をハイライト付きで置換
   nnoremap subp :OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '//!', 'g')<CR>!!gI<Left><Left><Left>
 " }}}
-NeoBundle 'LeafCage/yankround.vim'
+
 " yankround.vim {{{
   " キーマップ
   nmap p <Plug>(yankround-p)
@@ -529,42 +587,9 @@ NeoBundle 'LeafCage/yankround.vim'
   "履歴一覧(kien/ctrp.vim)
   nnoremap <silent>g<C-p> :<C-u>CtrlPYankRound<CR>
 " }}}
-NeoBundle 'PProvost/vim-ps1.git'
 
 " JavaScript {{{
-"NeoBundle 'felixge/vim-nodejs-errorformat'
-"NeoBundle 'moll/vim-node'
-"NeoBundle 'myhere/vim-nodejs-complete'
-"NeoBundle 'guileen/vim-node-dict'
-"au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
-
-"NeoBundle 'JavaScript-syntax'
-"NeoBundle 'pangloss/vim-javascript'
-"NeoBundle 'vim-scripts/JavaScript-Indent'
-NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'digitaltoad/vim-jade'
-
-" tern for vim
-if (has('python') || has('python3')) && executable('npm')
-  NeoBundle 'marijnh/tern_for_vim', {
-        \ 'build' : {
-        \   'others': 'npm install'
-        \ }}
-endif
-
-"" jscomplete-vim {{{
-"NeoBundle 'mattn/jscomplete-vim'
-"autocmd FileType javascript :setl omnifunc=jscomplete#CompleteJS
-""let g:neobundle_souce_rank = {
-""  \ 'jscomplete' : 500,
-""  \}
-"" DOMとMozilla関連とES6のメソッドを補完
-""let g:jscomplete_use = ['dom', 'moz', 'es6th']
-"let g:jscomplete_use = ['dom', 'moz']
-" }}}
-
 " syntastic {{{
-NeoBundle 'scrooloose/syntastic.git'
 let g:syntastic_javascript_checkers = ["jshint"]
 "let g:syntastic_javascript_jshint_conf = "~/_jshintrc"
 let g:syntastic_mode_map = {
@@ -587,15 +612,6 @@ let g:syntastic_mode_map = {
 
 " Python {{{
 " jedi-vim
-NeoBundleLazy 'davidhalter/jedi-vim', {
-  \ 'autoload': {
-  \   'filetypes': ['python', 'python3', 'djangohtml'],
-  \ },
-  \ 'build': {
-  \   'windows': 'pip install jedi',
-  \   'mac': 'pip install jedi',
-  \   'unix': 'pip install jedi',
-  \ }}
 "let s:hooks = neobundle#get_hooks('jedi-vim')
 "function! s:hooks.on_source(bundle)
 "  " 自動設定機能をOFFにし手動で設定を行う
@@ -607,25 +623,6 @@ NeoBundleLazy 'davidhalter/jedi-vim', {
 "  " gundooと被るため大文字に変更
 "  let g:jedi#goto_command = '<Leader>G'
 "endfunction
-" }}}
-
-"Omnisharp
-NeoBundleLazy 'nosami/Omnisharp', {
-\   'autoload': {'filetypes': ['cs']},
-\   'build': {
-\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
-\     'mac': 'xbuild server/OmniSharp.sln',
-\     'unix': 'xbuild server/OmniSharp.sln',
-\   }
-\ }
-
-"colorscheme
-NeoBundle 'w0ng/vim-hybrid'
-
-call neobundle#end()
-filetype plugin indent on
-
-NeoBundleCheck
 " }}}
 
 "vim-singleton {{{
