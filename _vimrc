@@ -130,8 +130,8 @@ endif
 "colorscheme molokai
 
 "syntax enable
-"set background=dark
-"colorscheme solarized
+set background=dark
+colorscheme solarized
 " }}}
 
 " ステータスライン設定 {{{
@@ -308,101 +308,96 @@ let g:SimpleJsIndenter_BriefMode = 1
 let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
-"NeoBundle {{{
-set nocompatible
-filetype off
-
-if has('vim_starting')
-  if &compatible
-    set nocompatible
-  endif
-
-  set runtimepath+=~/.vim/bundle/neobundle.vim,~/vimfiles/bundle/neobundle.vim
+"dein.vim {{{
+if &compatible
+  set nocompatible
 endif
 
-let s:bundlepath = s:vimfiles . '/bundle'
-call neobundle#begin(expand(s:bundlepath))
-NeoBundleFetch 'Shougo/neobundle.vim'
+"プラグインがインストールされるディレクトリ
+let s:dein_dir = expand('~/.cache/dein')
+" dein.vim 本体
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-let g:neobundle_default_git_protocol='https'
+" dein.vim が無ければ github から落としてくる
+if !isdirectory(s:dein_repo_dir)
+  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+endif
+let &runtimepath = s:dein_repo_dir . "," . &runtimepath
 
-NeoBundle 'Shougo/neosnippet.git'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'Shougo/neocomplete.vim.git'
-NeoBundle 'Shougo/unite.vim.git'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/vimfiler.git'
-NeoBundle 'Shougo/vimshell.git'
-NeoBundle 'https://github.com/Shougo/vimproc.git', { 
-  \ 'build' : { 
-    \ 'windows' : 'mingw32-make -f make_mingw64.mak', 
-    \ 'cygwin'  : 'make -f make_cygwin.mak',
-    \ 'mac'     : 'make -f make_mac.mak',
-    \ 'unix'    : 'make -f make_unix.mak',
-  \ },
-\}
-NeoBundle 'vim-scripts/Align.git'
-NeoBundle 'glidenote/memolist.vim.git'
-NeoBundle 'kien/ctrlp.vim.git'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'thinca/vim-singleton'
-NeoBundle 'tpope/vim-surround'
-"NeoBundle 'ujihisa/vimshell-ssh'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'scrooloose/nerdtree.git'
-NeoBundle 'nathanaelkane/vim-indent-guides.git'
-NeoBundle 'osyo-manga/vim-over'
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 'PProvost/vim-ps1.git'
+"設定開始
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
 
-"JavaScript
-"NeoBundle 'felixge/vim-nodejs-errorformat'
-"NeoBundle 'moll/vim-node'
-"NeoBundle 'myhere/vim-nodejs-complete'
-"NeoBundle 'guileen/vim-node-dict'
-"au FileType javascript set dictionary+=~/.vim/bundle/vim-node-dict/dict/node.dict,~/vimfiles/bundle/vim-node-dict/dict/node.dict
-"NeoBundle 'JavaScript-syntax'
-"NeoBundle 'pangloss/vim-javascript'
-"NeoBundle 'vim-scripts/JavaScript-Indent'
-NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'digitaltoad/vim-jade'
-" tern for vim
-if (has('python') || has('python3')) && executable('npm')
-  NeoBundle 'marijnh/tern_for_vim', {
-        \ 'build' : {
-        \   'others': 'npm install'
-        \ }}
+"  " プラグインリストを収めた TOML ファイル
+"  let g:rc_dir    = expand('~/.vim/rc)
+"  let s:toml      = g:rc_dir . '/dein.toml'
+"  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+"
+"  " TOML を読み込み、キャッシュしておく
+"  call dein#load_toml(s:toml,      {'lazy': 0})
+"  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+
+  call dein#add('Shougo/dein.vim')
+  call dein#add('Shougo/vimproc.vim', {
+      \   'build' : { 
+      \     'windows' : 'mingw32-make -f make_mingw64.mak', 
+      \     'cygwin'  : 'make -f make_cygwin.mak',
+      \     'mac'     : 'make -f make_mac.mak',
+      \     'unix'    : 'make -f make_unix.mak',
+      \   },
+      \})
+
+  call dein#add('Shougo/neocomplete.vim')
+  call dein#add('Shougo/neosnippet')
+  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/vimfiler')
+  call dein#add('Shougo/vimshell')
+
+  call dein#add('vim-scripts/Align.git')
+  call dein#add('thinca/vim-quickrun')
+  call dein#add('mattn/emmet-vim')
+  call dein#add('thinca/vim-singleton')
+  call dein#add('tpope/vim-surround')
+  call dein#add('itchyny/lightline.vim')
+  call dein#add('scrooloose/nerdtree.git')
+  call dein#add('nathanaelkane/vim-indent-guides.git')
+  call dein#add('osyo-manga/vim-over')
+  call dein#add('LeafCage/yankround.vim')
+
+  " PowerShell
+  call dein#add('PProvost/vim-ps1.git')
+
+  " JavaScript
+  call dein#add('jelera/vim-javascript-syntax', {'on_ft': 'javascript'})
+  call dein#add('digitaltoad/vim-jade')
+  " tern for vim
+  call dein#add('marijnh/tern_for_vim',
+        \ {'if'    : (has('python') || has('python3')) && executable('npm')},
+        \ {'build' : 'npm install' })
+
+  call dein#add('davidhalter/jedi-vim',
+        \ {'on_ft': ['python', 'python3', 'djangohtml']},
+        \ {'build': 'pip install jedi'})
+
+  call dein#add('w0ng/vim-hybrid')
+
+  " 設定終了
+  call dein#end()
+  call dein#save_state()
 endif
 
-NeoBundle 'scrooloose/syntastic.git'
+if dein#check_install(['vimproc'])
+  call dein#install(['vimproc'])
+endif
 
-NeoBundleLazy 'davidhalter/jedi-vim', {
-  \ 'autoload': {
-  \   'filetypes': ['python', 'python3', 'djangohtml'],
-  \ },
-  \ 'build': {
-  \   'windows': 'pip install jedi',
-  \   'mac': 'pip install jedi',
-  \   'unix': 'pip install jedi',
-  \ }}
+if dein#check_install()
+  call dein#install()
+endif
 
-NeoBundleLazy 'nosami/Omnisharp', {
-\   'autoload': {'filetypes': ['cs']},
-\   'build': {
-\     'windows': 'C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe server/OmniSharp.sln /p:Platform="Any CPU"',
-\     'mac': 'xbuild server/OmniSharp.sln',
-\     'unix': 'xbuild server/OmniSharp.sln',
-\   }
-\ }
+"}}}
 
-NeoBundle 'w0ng/vim-hybrid'
-
-call neobundle#end()
-filetype plugin indent on
-
-NeoBundleCheck
-" }}}
 
 "neosnippet {{{ ----------
 " Plugin key-mappings.
