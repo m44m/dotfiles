@@ -129,7 +129,7 @@ endif
 "autocmd ColorScheme * highlight Search guifg=#000000 guibg=#FD971F
 "colorscheme molokai
 
-"syntax enable
+syntax enable
 set background=dark
 colorscheme solarized
 " }}}
