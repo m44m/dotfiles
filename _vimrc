@@ -1,4 +1,7 @@
 " vim:set foldmethod=marker:
+set encoding=utf-8
+filetype off
+filetype plugin indent on
 scriptencoding utf8
 
 " vimフォルダの場所
@@ -12,7 +15,6 @@ endif
 
 " cdpath {{{
 " 環境変数CDPATHを設定しておく
-"let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
 let &cdpath = ',' . substitute(substitute($CDPATH, '\\', '/', 'g'), ';', ',', 'g')
 " }}}
 
@@ -31,8 +33,6 @@ set noswapfile
 set undodir=~/.vim/undo,~/vimfiles/undo
 
 " encoding設定 {{{
-set   encoding=utf-8
-
 if has('win32') && has('kaoriya') && has('gui')
   set   ambiwidth=auto
 else
@@ -69,7 +69,7 @@ endif
 set number
 
 " 括弧の対応表示時間
-:set showmatch matchtime=1
+set showmatch matchtime=1
 
 "タブ設定
 set ts=2 sw=2 sts=2
@@ -98,20 +98,6 @@ inoremap <RightMouse> <C-r><C-o>*
 set list
 set listchars=tab:^\ ,trail:~,extends:\
 
-"" 全角スペースを表示 {{{
-"function! ZenkakuSpace()
-"  highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
-"endfunction
-"if has('syntax')
-"  augroup ZenkakuSpace
-"    autocmd!
-"    autocmd ColorScheme       * call ZenkakuSpace()
-"    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-"  augroup END
-"  call ZenkakuSpace()
-"endif
-"}}}
-
 if has('gui')
   gui
 endif
@@ -122,14 +108,12 @@ endif
 
 "カラー設定: {{{
 "colorscheme phd
-
 "colorscheme hybrid
 
 "autocmd ColorScheme * highlight Comment guifg=#9C9884
 "autocmd ColorScheme * highlight Search guifg=#000000 guibg=#FD971F
 "colorscheme molokai
 
-syntax enable
 set background=dark
 colorscheme solarized
 " }}}
@@ -183,12 +167,6 @@ autocmd InsertLeave * let &l:iminsert=0
 
 " vimgrep時にQuickFixウィンドウを自働的に表示 {{{
 autocmd QuickFixCmdPost vimgrep cw
-" }}}
-
-" 折り畳み {{{
-:let g:xml_syntax_folding = 1
-autocmd FileType xml setlocal foldlevel=1
-:set foldmethod=syntax
 " }}}
 
 "<<キーマッピング>> {{{
@@ -309,6 +287,7 @@ let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
 "dein.vim {{{
+
 if &compatible
   set nocompatible
 endif
@@ -322,7 +301,7 @@ let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if !isdirectory(s:dein_repo_dir)
   execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
 endif
-let &runtimepath = s:dein_repo_dir . "," . &runtimepath
+let &runtimepath = s:dein_repo_dir . ',' . &runtimepath
 
 "設定開始
 if dein#load_state(s:dein_dir)
@@ -338,14 +317,7 @@ if dein#load_state(s:dein_dir)
 "  call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
   call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/vimproc.vim', {
-      \   'build' : { 
-      \     'windows' : 'mingw32-make -f make_mingw64.mak', 
-      \     'cygwin'  : 'make -f make_cygwin.mak',
-      \     'mac'     : 'make -f make_mac.mak',
-      \     'unix'    : 'make -f make_unix.mak',
-      \   },
-      \})
+  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
   call dein#add('Shougo/neocomplete.vim')
   call dein#add('Shougo/neosnippet')
@@ -373,13 +345,11 @@ if dein#load_state(s:dein_dir)
   call dein#add('jelera/vim-javascript-syntax', {'on_ft': 'javascript'})
   call dein#add('digitaltoad/vim-jade')
   " tern for vim
-  call dein#add('marijnh/tern_for_vim',
-        \ {'if'    : (has('python') || has('python3')) && executable('npm')},
-        \ {'build' : 'npm install' })
+  call dein#add('ternjs/tern_for_vim', {'build' : 'npm install' })
 
-  call dein#add('davidhalter/jedi-vim',
-        \ {'on_ft': ['python', 'python3', 'djangohtml']},
-        \ {'build': 'pip install jedi'})
+"  call dein#add('davidhalter/jedi-vim',
+"        \ {'on_ft': ['python', 'python3', 'djangohtml'],
+"        \  'build': 'pip install jedi'})
 
   call dein#add('w0ng/vim-hybrid')
 
@@ -626,3 +596,6 @@ if has('clientserver')
   call singleton#enable()
 endif
 " }}}
+
+filetype plugin indent on
+syntax on
