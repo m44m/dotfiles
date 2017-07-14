@@ -13,19 +13,19 @@
 ; and it launches a new Notepad window (or activates an existing one).  To
 ; try out these hotkeys, run AutoHotkey again, which will load this file.
 
-#Persistent
-  DMS_Init() ; IME状態表示の初期化
-return
+;#Persistent
+;  DMS_Init() ; IME状態表示の初期化
+;return
 
-#Include, disp_ime_status.ahk
+;#Include, disp_ime_status.ahk
 
-#t::
-id := WinExist("A")
-MsgBox % id
-return
+;#t::
+;id := WinExist("A")
+;MsgBox % id
+;return
 
 
-#z::Run www.autohotkey.com
+;#z::Run www.autohotkey.com
 ;#e::
 ;IfWinActive ahk_class CabinetWClass
 ;  Send ^h
@@ -44,14 +44,14 @@ sc07B & Space::Send, {sc029}
 ;#CapsLock::Send {Ctrl}
 ;~Pause::IME_SET(0)
 
-~LButton::       
-  DMS_Click() ; クリックフック
-return
+;~LButton::       
+;  DMS_Click() ; クリックフック
+;return
 
 
-^F8::
-  DMS_Reload() ; Ctrl+F8で、iniファイルのリロード
-return
+;^F8::
+;  DMS_Reload() ; Ctrl+F8で、iniファイルのリロード
+;return
 
 
 ^!n::
@@ -64,20 +64,20 @@ return
 
 ;;;クリップボード履歴;;;
 ;Ctrl 2回でクリップボード履歴を呼び出し
-~Ctrl::
-KeyWait, Ctrl, T0.200;放されるのを待つ。好みに合わせて適当に変える。
-DetectHiddenWindows,On
-If ErrorLevel = 0
-{
-  KeyWait, Ctrl, D T0.200;押されるのを待つ。好みに合わせて適当に変える。
-  If ErrorLevel = 0
-  {
-    PostMessage 786,0,0,,ahk_class WindowsForms10.Window.8.app.0.378734a ;WM_HOTKEYをポストの方がいい。
-    KeyWait, Ctrl
-    return
-  }
-}
-return
+;~Ctrl::
+;KeyWait, Ctrl, T0.200;放されるのを待つ。好みに合わせて適当に変える。
+;DetectHiddenWindows,On
+;If ErrorLevel = 0
+;{
+;  KeyWait, Ctrl, D T0.200;押されるのを待つ。好みに合わせて適当に変える。
+;  If ErrorLevel = 0
+;  {
+;    PostMessage 786,0,0,,ahk_class WindowsForms10.Window.8.app.0.378734a ;WM_HOTKEYをポストの方がいい。
+;    KeyWait, Ctrl
+;    return
+;  }
+;}
+;return
 
 ;Like vim key binding
 #IfWinActive ahk_class WindowsForms10.Window.8.app.0.378734a
