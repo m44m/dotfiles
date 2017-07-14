@@ -303,63 +303,26 @@ if !isdirectory(s:dein_repo_dir)
 endif
 let &runtimepath = s:dein_repo_dir . ',' . &runtimepath
 
+
 "設定開始
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
-"  " プラグインリストを収めた TOML ファイル
-"  let g:rc_dir    = expand('~/.vim/rc)
-"  let s:toml      = g:rc_dir . '/dein.toml'
-"  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
-"
-"  " TOML を読み込み、キャッシュしておく
-"  call dein#load_toml(s:toml,      {'lazy': 0})
-"  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  " プラグインリストを収めた TOML ファイル
+  let g:rc_dir    = expand(s:vimfiles . '/rc')
+  let s:toml      = g:rc_dir . '/dein.toml'
+  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
 
-  call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  "let g:dein#install_log_filename = g:rc_dir . '/dein_install.log'
 
-  call dein#add('Shougo/neocomplete.vim')
-  call dein#add('Shougo/neosnippet')
-  call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('Shougo/unite.vim')
-  call dein#add('Shougo/neomru.vim')
-  call dein#add('Shougo/vimfiler')
-  call dein#add('Shougo/vimshell')
+  " TOML を読み込み、キャッシュしておく
+  call dein#load_toml(s:toml,      {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
-  call dein#add('vim-scripts/Align.git')
-  call dein#add('thinca/vim-quickrun')
-  call dein#add('mattn/emmet-vim')
-  call dein#add('thinca/vim-singleton')
-  call dein#add('tpope/vim-surround')
-  call dein#add('itchyny/lightline.vim')
-  call dein#add('scrooloose/nerdtree.git')
-  call dein#add('nathanaelkane/vim-indent-guides.git')
-  call dein#add('osyo-manga/vim-over')
-  call dein#add('LeafCage/yankround.vim')
-
-  " PowerShell
-  call dein#add('PProvost/vim-ps1.git')
-
-  " JavaScript
-  call dein#add('jelera/vim-javascript-syntax', {'on_ft': 'javascript'})
-  call dein#add('digitaltoad/vim-jade')
-  " tern for vim
-  call dein#add('ternjs/tern_for_vim', {'build' : 'npm install' })
-
-"  call dein#add('davidhalter/jedi-vim',
-"        \ {'on_ft': ['python', 'python3', 'djangohtml'],
-"        \  'build': 'pip install jedi'})
-
-  call dein#add('w0ng/vim-hybrid')
 
   " 設定終了
   call dein#end()
   call dein#save_state()
-endif
-
-if dein#check_install(['vimproc'])
-  call dein#install(['vimproc'])
 endif
 
 if dein#check_install()
