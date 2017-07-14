@@ -1,3 +1,5 @@
 /.vim/bundle/*
 !/.vim/bundle/.gitkeep
 /.vim/swap
+/.vim/rc/dein_install.log
+/.vim/undo/*
