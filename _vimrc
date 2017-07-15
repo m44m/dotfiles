@@ -18,6 +18,13 @@ endif
 let &cdpath = ',' . substitute(substitute($CDPATH, '\\', '/', 'g'), ';', ',', 'g')
 " }}}
 
+" shell {{{
+" shellをpowerpointにしておく
+if has('win32') 
+  set shell=C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe
+endif
+" }}}
+
 " バックアップファイルを作成しない {{{
 set nowritebackup
 set nobackup
@@ -599,3 +606,4 @@ endif
 
 filetype plugin indent on
 syntax on
+
