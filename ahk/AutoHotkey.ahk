@@ -97,25 +97,25 @@ return
 ;無変換/変換+hjkl
 #h::
 sc07B & h::
-vk1Csc079 & h::
+sc079 & h::
 Send {left}
 Return
 
 #j::
 sc07B & j::
-vk1Csc079 & j::
+sc079 & j::
 Send {down}
 Return
 
 #k::
 sc07B & k::
-vk1Csc079 & k::
+sc079 & k::
 Send {up}
 Return
 
 #l::
 sc07B & l::
-vk1Csc079 & l::
+sc079 & l::
 Send {right}
 Return
 
@@ -151,12 +151,12 @@ return
 
 #UseHook
 
-; ひらカタ、無変換殺す
-vkF2sc070::
-vk1Dsc07B::
-  return
-; 変換:space
-vk1Csc079::SPACE
+;; ひらカタ、無変換殺す
+;vkF2sc070::
+;vk1Dsc07B::
+;  return
+;; 変換:space
+;sc079::SPACE
 
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  ; 1段目
