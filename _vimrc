@@ -4,8 +4,13 @@ filetype off
 filetype plugin indent on
 scriptencoding utf8
 
+
 " vimフォルダの場所
 let s:vimfiles = has('win32') ? '~/vimfiles' : '~/.vim'
+
+" python dll のパス定義
+let s:pythonpath = expand($PYTHONPATH . '/python36.dll')
+set pythonthreedll=s:pythonpath
 
 " 起動時のパスをホームディレクトリに設定 {{{
 if expand("%") == ''
@@ -108,15 +113,9 @@ set listchars=tab:^\ ,trail:~,extends:\
 if has('gui')
   gui
 endif
-" 透過表示設定 {{{
-"set transparency=225
-"set transparency=200
 " }}}
 
 "カラー設定: {{{
-"colorscheme phd
-"colorscheme hybrid
-
 "autocmd ColorScheme * highlight Comment guifg=#9C9884
 "autocmd ColorScheme * highlight Search guifg=#000000 guibg=#FD971F
 "colorscheme molokai
@@ -125,42 +124,6 @@ set background=dark
 colorscheme solarized
 " }}}
 
-" ステータスライン設定 {{{
-" 文字コードを表示
-"set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ (%v,%l)/%L%8P\ 
-
-"挿入モード時、ステータスラインの色を変更
-" let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
-" 
-" if has('syntax')
-"   augroup InsertHook
-"     autocmd!
-"     autocmd InsertEnter * call s:StatusLine('Enter')
-"     autocmd InsertLeave * call s:StatusLine('Leave')
-"   augroup END
-" endif
-" 
-" let s:slhlcmd = ''
-" function! s:StatusLine(mode)
-"   if a:mode == 'Enter'
-"     silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-"     silent exec g:hi_insert
-"   else
-"     highlight clear StatusLine
-"     silent exec s:slhlcmd
-"     redraw
-"   endif
-" endfunction
-" 
-" function! s:GetHighlight(hi)
-"   redir => hl
-"   exec 'highlight '.a:hi
-"   redir END
-"   let hl = substitute(hl, '[\r\n]', '', 'g')
-"   let hl = substitute(hl, 'xxx', '', '')
-"   return hl
-" endfunction
-"}}}
 
 " カーソル行のハイライト {{{
 autocmd WinEnter *  setlocal cursorline
@@ -221,8 +184,6 @@ inoremap <Home> <Esc>^i
 " Esc 2回でハイライト消去
 nmap <ESC><ESC> :noh<CR><ESC>
 
-" ESCキーをウィンドウズ
-"nmap <Esc> <C-w>
 
 ""日時の入力補助
 "inoremap <expr> ,df strftime('%Y-%m-%d %H:%M:%S')
@@ -267,15 +228,6 @@ let g:netrw_altv = 1
 let g:netrw_alto = 1
 " }}}
 
-"SSHクライアント設定 {{{
-if (has('win32') || has('win64'))
-  "use scp
-  let g:netrw_scp_cmd     = "C:\\PuTTY\\pscp.exe -q -batch"
-  let g:netrw_sftp_cmd    = "C:\\PuTTY\\psftp.exe"
-  let g:netrw_ssh_cmd     = "C:\\PuTTY\\plink.exe"
-endif
-" }}}
-
 " Alignを日本語環境で使用するための設定 {{{
 :let g:Align_xstrlen = 3
 " }}}
@@ -286,11 +238,6 @@ autocmd BufWinEnter,BufNewFile *.ttl setlocal filetype=ttl
 autocmd Filetype ttl setlocal commentstring=;\ %s
 " for quickrun
 "let g:quickrun_config['ttl'] = {'command': 'ttpmacro' }
-" }}}
-
-"simple-javascript-indenter {{{
-let g:SimpleJsIndenter_BriefMode = 1
-let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
 "dein.vim {{{
@@ -309,7 +256,6 @@ if !isdirectory(s:dein_repo_dir)
   execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
 endif
 let &runtimepath = s:dein_repo_dir . ',' . &runtimepath
-
 
 "設定開始
 if dein#load_state(s:dein_dir)
@@ -331,6 +277,7 @@ if dein#load_state(s:dein_dir)
   call dein#end()
   call dein#save_state()
 endif
+call dein#call_hook('source')
 
 if dein#check_install()
   call dein#install()
@@ -524,25 +471,16 @@ let g:use_emmet_complete_tag = 1
 " }}}
 
 " JavaScript {{{
-" syntastic {{{
-let g:syntastic_javascript_checkers = ["jshint"]
-"let g:syntastic_javascript_jshint_conf = "~/_jshintrc"
-let g:syntastic_mode_map = {
-      \ 'mode': 'active',
-      \ 'active_filetypes': ['ruby', 'javascript'],
-      \ 'passive_filetypes': []
-      \ }
-" }}}
+let g:ale_fixers = {'javascript': ['prettier']}
+let g:ale_fix_on_save = 1
 
-" Closure Linter {{{
-" refer to:
-" http://www.curiosity-drives.me/2012/01/vimjavascript.html
-" #文法チェック
-"autocmd FileType javascript :compiler gjslint
-"autocmd QuickfixCmdPost make copen
-" -> Windwos(7 x64)でgjslintが動かなかった...
-" }}}
-
+function! EnableJavascript()
+  " Setup used libraries
+  let g:used_javascript_libs = 'jquery,react'
+  let b:javascript_lib_use_jquery = 1
+  let b:javascript_lib_use_react = 1
+endfunction
+autocmd FileType javascript,javascript.jsx call EnableJavascript()
 "}}}
 
 " Python {{{
@@ -558,13 +496,6 @@ let g:syntastic_mode_map = {
 "  " gundooと被るため大文字に変更
 "  let g:jedi#goto_command = '<Leader>G'
 "endfunction
-" }}}
-
-"vim-singleton {{{
-" すでにインスタンスがある場合はそっちで開く
-if has('clientserver')
-  call singleton#enable()
-endif
 " }}}
 
 filetype plugin indent on
