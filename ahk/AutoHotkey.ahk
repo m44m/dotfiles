@@ -14,7 +14,7 @@
 ; try out these hotkeys, run AutoHotkey again, which will load this file.
 
 ;#Persistent
-;  DMS_Init() ; IMEó‘Ô•\¦‚Ì‰Šú‰»
+;  DMS_Init() ; IMEçŠ¶æ…‹è¡¨ç¤ºã®åˆæœŸåŒ–
 ;return
 
 ;#Include, disp_ime_status.ahk
@@ -39,18 +39,30 @@
 <!Space::sc029
 sc07B & Space::Send, {sc029}
 
+;EscæŠ¼ä¸‹æ™‚ã¯IMEè§£é™¤ï¼ˆVimãƒ¢ãƒ¼ãƒ‰ç”¨ï¼‰
+$Esc::
+  Send,{Esc}
+  Sleep 1
+  IME_SET(0)
+  Return
+
+$^[::
+  Send,{^[]}
+  Sleep 1
+  IME_SET(0)
+  Return
 
 ;#~#RCtrl::Send {CapsLock}
 ;#CapsLock::Send {Ctrl}
 ;~Pause::IME_SET(0)
 
 ;~LButton::       
-;  DMS_Click() ; ƒNƒŠƒbƒNƒtƒbƒN
+;  DMS_Click() ; ã‚¯ãƒªãƒƒã‚¯ãƒ•ãƒƒã‚¯
 ;return
 
 
 ;^F8::
-;  DMS_Reload() ; Ctrl+F8‚ÅAiniƒtƒ@ƒCƒ‹‚ÌƒŠƒ[ƒh
+;  DMS_Reload() ; Ctrl+F8ã§ã€iniãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒªãƒ­ãƒ¼ãƒ‰
 ;return
 
 
@@ -62,17 +74,17 @@ else
 return
 
 
-;;;ƒNƒŠƒbƒvƒ{[ƒh—š—ğ;;;
-;Ctrl 2‰ñ‚ÅƒNƒŠƒbƒvƒ{[ƒh—š—ğ‚ğŒÄ‚Ño‚µ
+;;;ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰å±¥æ­´;;;
+;Ctrl 2å›ã§ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰å±¥æ­´ã‚’å‘¼ã³å‡ºã—
 ;~Ctrl::
-;KeyWait, Ctrl, T0.200;•ú‚³‚ê‚é‚Ì‚ğ‘Ò‚ÂBD‚İ‚É‡‚í‚¹‚Ä“K“–‚É•Ï‚¦‚éB
+;KeyWait, Ctrl, T0.200;æ”¾ã•ã‚Œã‚‹ã®ã‚’å¾…ã¤ã€‚å¥½ã¿ã«åˆã‚ã›ã¦é©å½“ã«å¤‰ãˆã‚‹ã€‚
 ;DetectHiddenWindows,On
 ;If ErrorLevel = 0
 ;{
-;  KeyWait, Ctrl, D T0.200;‰Ÿ‚³‚ê‚é‚Ì‚ğ‘Ò‚ÂBD‚İ‚É‡‚í‚¹‚Ä“K“–‚É•Ï‚¦‚éB
+;  KeyWait, Ctrl, D T0.200;æŠ¼ã•ã‚Œã‚‹ã®ã‚’å¾…ã¤ã€‚å¥½ã¿ã«åˆã‚ã›ã¦é©å½“ã«å¤‰ãˆã‚‹ã€‚
 ;  If ErrorLevel = 0
 ;  {
-;    PostMessage 786,0,0,,ahk_class WindowsForms10.Window.8.app.0.378734a ;WM_HOTKEY‚ğƒ|ƒXƒg‚Ì•û‚ª‚¢‚¢B
+;    PostMessage 786,0,0,,ahk_class WindowsForms10.Window.8.app.0.378734a ;WM_HOTKEYã‚’ãƒã‚¹ãƒˆã®æ–¹ãŒã„ã„ã€‚
 ;    KeyWait, Ctrl
 ;    return
 ;  }
@@ -94,7 +106,7 @@ return
   return
 #IfWinActive
 
-;–³•ÏŠ·/•ÏŠ·+hjkl
+;ç„¡å¤‰æ›/å¤‰æ›+hjkl
 #h::
 sc07B & h::
 sc079 & h::
@@ -120,7 +132,7 @@ Send {right}
 Return
 
 
-;;;‘I‘ğ•¶š—ñ‚Ìs“ª‚Éˆø—p•„‚ğ’Ç‰Á/íœ;;;
+;;;é¸æŠæ–‡å­—åˆ—ã®è¡Œé ­ã«å¼•ç”¨ç¬¦ã‚’è¿½åŠ /å‰Šé™¤;;;
 ^>::
   Send,^c
   Clipwait,2
@@ -151,44 +163,44 @@ return
 
 #UseHook
 
-;; ‚Ğ‚çƒJƒ^A–³•ÏŠ·E‚·
+;; ã²ã‚‰ã‚«ã‚¿ã€ç„¡å¤‰æ›æ®ºã™
 ;vkF2sc070::
 ;vk1Dsc07B::
 ;  return
-;; •ÏŠ·:space
+;; å¤‰æ›:space
 ;sc079::SPACE
 
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- ; 1’i–Ú
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- VKF4::Send,{``}    ;         ”¼Šp/‘SŠp     -> `
- +VKF4::Send,{~}    ; Shift + ”¼Šp/‘SŠp     -> ~
- +2::Send,{@}       ; Shift + 2         ["] -> @
- +6::Send,{^}       ; Shift + 6         [&] -> ^
- +7::Send,{&}       ; Shift + 7         ['] -> &
- +8::Send,{*}       ; Shift + 8         [(] -> *
- +9::Send,{(}       ; Shift + 9         [)] -> (
- +0::Send,{)}       ; Shift + 0         [ ] -> )
- +-::Send,{_}       ; Shift + -         [=] -> _
- ^::Send,{=}        ;                   [^] -> =
- +^::Send,{+}       ; Shift + ^         [~] -> +
-
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- ; 2’i–Ú
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- @::[              ;                   [@] -> [
- +@::{             ; Shift + @         [`] -> {
- [::]              ;                   [[] -> ]
- +[::Send,{}}      ; Shift + [         [{] -> }
-;ENTER::\
-;+ENTER::|
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- ; 3’i–Ú
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- +;::Send,{:}      ; Shift + ;         [+] -> ;
- :::Send,{'}       ;                   [:] -> '
- *::Send,{"}       ; Shift + :         [*] -> "
- ]::ENTER          ;                   []] -> ENTER
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ; 1æ®µç›®
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; VKF4::Send,{``}    ;         åŠè§’/å…¨è§’     -> `
+; +VKF4::Send,{~}    ; Shift + åŠè§’/å…¨è§’     -> ~
+; +2::Send,{@}       ; Shift + 2         ["] -> @
+; +6::Send,{^}       ; Shift + 6         [&] -> ^
+; +7::Send,{&}       ; Shift + 7         ['] -> &
+; +8::Send,{*}       ; Shift + 8         [(] -> *
+; +9::Send,{(}       ; Shift + 9         [)] -> (
+; +0::Send,{)}       ; Shift + 0         [ ] -> )
+; +-::Send,{_}       ; Shift + -         [=] -> _
+; ^::Send,{=}        ;                   [^] -> =
+; +^::Send,{+}       ; Shift + ^         [~] -> +
+;
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ; 2æ®µç›®
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; @::[              ;                   [@] -> [
+; +@::{             ; Shift + @         [`] -> {
+; [::]              ;                   [[] -> ]
+; +[::Send,{}}      ; Shift + [         [{] -> }
+;;ENTER::\
+;;+ENTER::|
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ; 3æ®µç›®
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; +;::Send,{:}      ; Shift + ;         [+] -> ;
+; :::Send,{'}       ;                   [:] -> '
+; *::Send,{"}       ; Shift + :         [*] -> "
+; ]::ENTER          ;                   []] -> ENTER
 
 
 ; Note: From now on whenever you run AutoHotkey directly, this script
@@ -197,3 +209,27 @@ return
 ; Please read the QUICK-START TUTORIAL near the top of the help file.
 ; It explains how to perform common automation tasks such as sending
 ; keystrokes and mouse clicks.  It also explains more about hotkeys.
+
+
+;-----------------------------------------------------------
+; IMEã®çŠ¶æ…‹ã‚’ã‚»ãƒƒãƒˆ
+;   SetSts          1:ON / 0:OFF
+;   WinTitle="A"    å¯¾è±¡Window
+;   æˆ»ã‚Šå€¤          0:æˆåŠŸ / 0ä»¥å¤–:å¤±æ•—
+;-----------------------------------------------------------
+IME_SET(SetSts, WinTitle="A")    {
+    ControlGet,hwnd,HWND,,,%WinTitle%
+    if    (WinActive(WinTitle))    {
+        ptrSize := !A_PtrSize ? 4 : A_PtrSize
+        VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
+        NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
+        hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
+                 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
+    }
+
+    return DllCall("SendMessage"
+          , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
+          , UInt, 0x0283  ;Message : WM_IME_CONTROL
+          ,  Int, 0x006   ;wParam  : IMC_SETOPENSTATUS
+          ,  Int, SetSts) ;lParam  : 0 or 1
+}
