@@ -3,3 +3,5 @@
 /.vim/swap
 /.vim/rc/dein_install.log
 /.vim/undo/*
+/.vim/pack/*
+
