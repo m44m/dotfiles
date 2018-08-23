@@ -39,6 +39,9 @@ repo = 'mattn/emmet-vim'
 
 [[plugins]]
 repo = 'thinca/vim-singleton'
+hook_source = '''
+  call singleton#enable()
+'''
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -61,3 +64,13 @@ repo = 'LeafCage/yankround.vim'
 # PowerSehll
 [[plugins]]
 repo = 'PProvost/vim-ps1.git'
+
+[[Plugins]]
+repo = 'tomtom/tcomment_vim'
+
+[[plugins]]
+repo = 'w0rp/ale'
+if = ''' has('job') && has('channel') && has('timers')'''
+
+# [[plugins]]
+# repo = 'vim-syntastic/syntastic.git'

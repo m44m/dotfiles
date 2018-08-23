@@ -10,12 +10,27 @@ repo = 'Shougo/neomru.vim'
 on_souce = ['unite.vim']
 
 ##JavaScript
+# [[plugins]]
+# repo = 'pangloss/vim-javascript'
+# on_ft = ['javascript', 'javascript.jsx']
+
 [[plugins]]
 repo = 'othree/yajs.vim'
-on_ft = ['javascript']
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'othree/es.next.syntax.vim'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'othree/javascript-libraries-syntax.vim'
+on_ft = ['javascript', 'javascript.jsx']
 
 [[plugins]]
 repo = 'ternjs/tern_for_vim'
 build = 'npm install'
-on_ft = ['javascript']
+on_ft = ['javascript', 'javascript.jsx']
 
+[[plugins]]
+repo = 'MaxMEllon/vim-jsx-pretty'
+on_ft = ['javascript', 'javascript.jsx']
