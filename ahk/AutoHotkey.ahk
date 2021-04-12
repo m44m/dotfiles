@@ -13,83 +13,109 @@
 ; and it launches a new Notepad window (or activates an existing one).  To
 ; try out these hotkeys, run AutoHotkey again, which will load this file.
 
-;#Persistent
-;  DMS_Init() ; IME状態表示の初期化
-;return
 
-;#Include, disp_ime_status.ahk
-
-;#t::
-;id := WinExist("A")
-;MsgBox % id
-;return
-
-
-;#z::Run www.autohotkey.com
-;#e::
-;IfWinActive ahk_class CabinetWClass
-;  Send ^h
-;else
-;  Send #1
-;return
-
-<#Tab::AltTab
-
-#Space::sc029
-<!Space::sc029
-sc07B & Space::Send, {sc029}
-
-;Esc押下時はIME解除（Vimモード用）
-$Esc::
-  Send,{Esc}
-  Sleep 1
-  IME_SET(0)
-  Return
-
-$^[::
-  Send,{^[]}
-  Sleep 1
-  IME_SET(0)
-  Return
-
-;#~#RCtrl::Send {CapsLock}
-;#CapsLock::Send {Ctrl}
-;~Pause::IME_SET(0)
-
-;~LButton::       
-;  DMS_Click() ; クリックフック
-;return
-
-
-;^F8::
-;  DMS_Reload() ; Ctrl+F8で、iniファイルのリロード
-;return
-
-
-^!n::
-IfWinExist Untitled - Notepad
-  WinActivate
-else
-  Run Notepad
+#t::
+id := WinExist("A")
+MsgBox % id
 return
 
+;<#Tab::AltTab
 
-;;;クリップボード履歴;;;
-;Ctrl 2回でクリップボード履歴を呼び出し
-;~Ctrl::
-;KeyWait, Ctrl, T0.200;放されるのを待つ。好みに合わせて適当に変える。
-;DetectHiddenWindows,On
-;If ErrorLevel = 0
-;{
-;  KeyWait, Ctrl, D T0.200;押されるのを待つ。好みに合わせて適当に変える。
-;  If ErrorLevel = 0
+;IME�؂�ւ�
+#Space::!`
+<!Space::!`
+
+;IME.ahk����R�s�y
+IME_SET(setSts, WinTitle="")
+;-----------------------------------------------------------
+; IME�̝�Ԃ��Z�b�g
+;    �Ν۝F AHK v1.0.34�ȝ~
+;   SetSts  : 1:ON 0:OFF
+;   WinTitle: �Ν�Window (�ȗ���:�A�N�e�B�u�E�B���h�E)
+;   �߂�l  1:ON 0:OFF
+;-----------------------------------------------------------
+{
+    ifEqual WinTitle,,  SetEnv,WinTitle,A
+    WinGet,hWnd,ID,%WinTitle%
+    DefaultIMEWnd := DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hWnd, Uint)
+
+    ;Message : WM_IME_CONTROL  wParam:IMC_SETOPENSTATUS
+    DetectSave := A_DetectHiddenWindows
+    DetectHiddenWindows,ON
+    SendMessage 0x283, 0x006,setSts,,ahk_id %DefaultIMEWnd%
+    DetectHiddenWindows,%DetectSave%
+    Return ErrorLevel
+}
+
+sc079:: IME_SET(0) ;�ϊ�   -> IME OFF
+
+sc07B up:: IME_SET(1) ;���ϊ� -> IME ON
+;sc07B:: ;muhenkan
+;  KeyWait, sc07B, U
+;  KeyWait, sc07B, D T0.2 ;wait 0.2sec
+;  If (ErrorLevel <> 0)
 ;  {
-;    PostMessage 786,0,0,,ahk_class WindowsForms10.Window.8.app.0.378734a ;WM_HOTKEYをポストの方がいい。
-;    KeyWait, Ctrl
-;    return
+;    Send, {sc07B}
 ;  }
-;}
-;return
+;  else
+;  {
+;    IME_SET(1)
+;  }
+;  Return
+
+sc07B & h:: Send, {Left}
+sc07B & j:: Send, {Down}
+sc07B & k:: Send, {Up}
+sc07B & l:: Send, {Right}
+
+;CapsLock
+sc03A & a:: Send ^{a}
+sc03A & b:: Send {BS}
+sc03A & c:: Send ^{c}
+sc03A & d:: Send {Del}
+sc03A & e:: Send {End}
+sc03A & f:: Send ^{f}
+sc03A & g:: Send ^{g}
+sc03A & h:: Send, {Left}
+sc03A & i:: Send, ^{i}
+sc03A & j:: Send, {Down}
+sc03A & k:: Send, {Up}
+sc03A & l:: Send, {Right}
+sc03A & m:: Send, ^{m}
+sc03A & n:: Send, ^{n}
+sc03A & o:: Send, ^{j}
+sc03A & p:: Send, ^{p}
+sc03A & q:: Send, ^{q}
+sc03A & r:: Send, ^{r}
+sc03A & s:: Send, ^{s}
+sc03A & t:: Send, ^{t}
+sc03A & u:: Send, ^{u}
+sc03A & v:: Send, ^{v}
+sc03A & w:: Send, ^{w}
+sc03A & x:: Send, ^{x}
+sc03A & y:: Send, ^{y}
+sc03A & z:: Send, ^{z}
+sc03A & 0:: Send, {Home}
+sc03A & ':: Send, ^{'}
+;sc03A & Space:: !`
+
+;JIS->�p��z�񉻑Ή�
+ sc07D:: \
++sc07d:: |
+ sc073:: \ 
++sc073:: _
+
+
+;Kill Ins
+ Ins:: Return
+!Ins:: Send, {Ins} ;Use with Alt
+
+;Kill F1 on Excel
+#IfWinActive ahk_exe EXCEL.EXE
+   F1:: Return
+  +F1:: Send, {F1} ;Use with Shift
+#IfWinActive
+
 
 ;Like vim key binding
 #IfWinActive ahk_class WindowsForms10.Window.8.app.0.378734a
@@ -106,33 +132,7 @@ return
   return
 #IfWinActive
 
-;無変換/変換+hjkl
-#h::
-sc07B & h::
-sc079 & h::
-Send {left}
-Return
-
-#j::
-sc07B & j::
-sc079 & j::
-Send {down}
-Return
-
-#k::
-sc07B & k::
-sc079 & k::
-Send {up}
-Return
-
-#l::
-sc07B & l::
-sc079 & l::
-Send {right}
-Return
-
-
-;;;選択文字列の行頭に引用符を追加/削除;;;
+;Add/Remove indent mark
 ^>::
   Send,^c
   Clipwait,2
@@ -160,47 +160,58 @@ return
   lines :=
 return
 
+;hotstring
+;yyyymmdd
+::`\ymd::
+IfEqual, A_EndChar, `n
+  Clipboard = %A_YYYY%%A_MM%%A_DD%
+Else
+  Clipboard = %A_YYYY%%A_EndChar%%A_MM%%A_EndChar%%A_DD%
+Send,^v
+return
 
-#UseHook
+::`\ym::
+IfEqual, A_EndChar, `n
+  Clipboard = %A_YYYY%%A_MM%
+Else
+  Clipboard = %A_YYYY%%A_EndChar%%A_MM%
+Send,^v
+return
 
-;; ひらカタ、無変換殺す
-;vkF2sc070::
-;vk1Dsc07B::
-;  return
-;; 変換:space
-;sc079::SPACE
+; mail address
+::`\mail::m_shishima@cec-ltd.co.jp
 
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ; 1段目
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; VKF4::Send,{``}    ;         半角/全角     -> `
-; +VKF4::Send,{~}    ; Shift + 半角/全角     -> ~
-; +2::Send,{@}       ; Shift + 2         ["] -> @
-; +6::Send,{^}       ; Shift + 6         [&] -> ^
-; +7::Send,{&}       ; Shift + 7         ['] -> &
-; +8::Send,{*}       ; Shift + 8         [(] -> *
-; +9::Send,{(}       ; Shift + 9         [)] -> (
-; +0::Send,{)}       ; Shift + 0         [ ] -> )
-; +-::Send,{_}       ; Shift + -         [=] -> _
-; ^::Send,{=}        ;                   [^] -> =
-; +^::Send,{+}       ; Shift + ^         [~] -> +
+; ���
+::zh::��
+::zj::��
+::zk::��
+::zl::��
+
+; �`���^�����O�΍�
+; Enter::
+;   Input, outkey, I T0.01 L1, {Enter}
+;   ; OutputDebug, % ErrorLevel
+;   If(ErrorLevel == "EndKey:Enter"){
+;     OutputDebug, Canceled!
+;   }
+;   Send, {Enter}
+;   return 
+
+;; This script runs Explorer++ on Win+E.
+;; The Explorer++ executable must be in the same directory as this script file.
 ;
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ; 2段目
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; @::[              ;                   [@] -> [
-; +@::{             ; Shift + @         [`] -> {
-; [::]              ;                   [[] -> ]
-; +[::Send,{}}      ; Shift + [         [{] -> }
-;;ENTER::\
-;;+ENTER::|
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ; 3段目
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; +;::Send,{:}      ; Shift + ;         [+] -> ;
-; :::Send,{'}       ;                   [:] -> '
-; *::Send,{"}       ; Shift + :         [*] -> "
-; ]::ENTER          ;                   []] -> ENTER
+;#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+;#SingleInstance force ; Only one copy of this script should run at a time.
+;SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+;SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+;
+;#e::
+;try {
+;    Run %A_ScriptDir%\Explorer++.exe
+;} catch e {
+;    MsgBox Couldn't run Explorer++.`nPlease make sure it's in the same directory as this script (%A_ScriptDir%).
+;}
+;return
 
 
 ; Note: From now on whenever you run AutoHotkey directly, this script
@@ -210,26 +221,3 @@ return
 ; It explains how to perform common automation tasks such as sending
 ; keystrokes and mouse clicks.  It also explains more about hotkeys.
 
-
-;-----------------------------------------------------------
-; IMEの状態をセット
-;   SetSts          1:ON / 0:OFF
-;   WinTitle="A"    対象Window
-;   戻り値          0:成功 / 0以外:失敗
-;-----------------------------------------------------------
-IME_SET(SetSts, WinTitle="A")    {
-    ControlGet,hwnd,HWND,,,%WinTitle%
-    if    (WinActive(WinTitle))    {
-        ptrSize := !A_PtrSize ? 4 : A_PtrSize
-        VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-        NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-        hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-                 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-    }
-
-    return DllCall("SendMessage"
-          , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-          , UInt, 0x0283  ;Message : WM_IME_CONTROL
-          ,  Int, 0x006   ;wParam  : IMC_SETOPENSTATUS
-          ,  Int, SetSts) ;lParam  : 0 or 1
-}
